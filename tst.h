@@ -5,6 +5,12 @@
 #include <string>
 #include <vector>
 #include <qqml.h>
+#include <testpacket.h>
+
+#include <QTimer>
+#include <QTime>
+
+#include <QDebug>
 
 using namespace std;
 
@@ -17,9 +23,15 @@ public:
     Q_INVOKABLE QVariantMap getList(){
         return map;
     }
+    TestPacket *packet;
+    QTimer *timer;
     QVariantMap map = {{"a", "b"}, {"c", "d"}, {"e", "f"}};
+public slots:
+    void onTimer(){
+        emit packetDeserialized(packet);
+    }
 signals:
-
+    void packetDeserialized(TestPacket *packet);
 };
 
 #endif // TST_H

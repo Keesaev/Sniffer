@@ -1,6 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import Test 1.1
+import TestPacket 1.1
 import QtQuick.Controls 2.0
 
 Window {
@@ -117,5 +118,9 @@ Window {
 
     Test{
         id: test
+
+        onPacketDeserialized:{
+            packetsView.addPacketToView(packet)
+        }
     }
 }

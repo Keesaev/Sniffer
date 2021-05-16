@@ -2,12 +2,24 @@ import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Styles 1.4
+import TestPacket 1.1
 
 Window{
     id: packetsView
-    width: 640
-    height: 480
+    width: 800
+    height: 600
     visible: false
+
+    function addPacketToView(packet){
+        listModel.append({
+                    number: packet.getNumber(),
+                    timestamp: packet.getTimestamp(),
+                    source: packet.getSourceIp(),
+                    destination: packet.getDestIp(),
+                    protocol: packet.getProtocol(),
+                    length: packet.getLength()
+                })
+    }
 
     // Кнопки-иконки сверху
     Row{
@@ -88,10 +100,6 @@ Window{
                     PacketsViewCell { cellText: length; cellWidth: parent.width; cellColor: rowColor }
                 }
             }
-
-            onCurrentIndexChanged: {
-                console.log(currentIndex)
-            }
         }
     }
 
@@ -112,166 +120,14 @@ Window{
 
             Text{
                 padding: {left: 5}
-                text: listModel.get(listView.currentIndex).fullData
+                //text: listModel.get(listView.currentIndex).fullData
             }
         }
     }
 
     ListModel{
         id: listModel
-        ListElement{
-            number: 1
-            timestamp: "00.00.01"
-            source: "192.168.1.1"
-            destination: "192.168.1.1"
-            protocol: "TCP"
-            length: 32
-            fullData: "BlaBla"
-        }
-        ListElement{
-            number: 1
-            timestamp: "00.00.01"
-            source: "192.168.1.1"
-            destination: "192.168.1.1"
-            protocol: "TCP"
-            length: 32
-            fullData: "BlaBla"
-        }
-        ListElement{
-            number: 1
-            timestamp: "00.00.01"
-            source: "192.168.1.1"
-            destination: "192.168.1.1"
-            protocol: "TCP"
-            length: 32
-            fullData: "BlaBla"
-        }
-        ListElement{
-            number: 1
-            timestamp: "00.00.01"
-            source: "192.168.1.1"
-            destination: "192.168.1.1"
-            protocol: "TCP"
-            length: 32
-            fullData: "BlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBla\nBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBla\nBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBla\nBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBla\nBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBla\nBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBla\nBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBla\n\n\n\BlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBla\nBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBla\nBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBla\nBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBla\nBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBla"
-        }
-        ListElement{
-            number: 1
-            timestamp: "00.00.01"
-            source: "192.168.1.1"
-            destination: "192.168.1.1"
-            protocol: "TCP"
-            length: 32
-            fullData: "BlaBla"
-        }
-        ListElement{
-            number: 1
-            timestamp: "00.00.01"
-            source: "192.168.1.1"
-            destination: "192.168.1.1"
-            protocol: "TCP"
-            length: 32
-            fullData: "BlaBla"
-        }
-        ListElement{
-            number: 1
-            timestamp: "00.00.01"
-            source: "192.168.1.1"
-            destination: "192.168.1.1"
-            protocol: "TCP"
-            length: 32
-            fullData: "BlaBla"
-        }
-        ListElement{
-            number: 1
-            timestamp: "00.00.01"
-            source: "192.168.1.1"
-            destination: "192.168.1.1"
-            protocol: "TCP"
-            length: 32
-            fullData: "BlaBla"
-        }
-        ListElement{
-            number: 1
-            timestamp: "00.00.01"
-            source: "192.168.1.1"
-            destination: "192.168.1.1"
-            protocol: "TCP"
-            length: 32
-            fullData: "BlaBla"
-        }
-        ListElement{
-            number: 1
-            timestamp: "00.00.01"
-            source: "192.168.1.1"
-            destination: "192.168.1.1"
-            protocol: "TCP"
-            length: 32
-            fullData: "BlaBla"
-        }
-        ListElement{
-            number: 1
-            timestamp: "00.00.01"
-            source: "192.168.1.1"
-            destination: "192.168.1.1"
-            protocol: "TCP"
-            length: 32
-            fullData: "BlaBla"
-        }
-        ListElement{
-            number: 1
-            timestamp: "00.00.01"
-            source: "192.168.1.1"
-            destination: "192.168.1.1"
-            protocol: "TCP"
-            length: 32
-            fullData: "BlaBla"
-        }
-        ListElement{
-            number: 1
-            timestamp: "00.00.01"
-            source: "192.168.1.1"
-            destination: "192.168.1.1"
-            protocol: "TCP"
-            length: 32
-            fullData: "BlaBla"
-        }
-        ListElement{
-            number: 1
-            timestamp: "00.00.01"
-            source: "192.168.1.1"
-            destination: "192.168.1.1"
-            protocol: "TCP"
-            length: 32
-            fullData: "BlaBla"
-        }
-        ListElement{
-            number: 1
-            timestamp: "00.00.01"
-            source: "192.168.1.1"
-            destination: "192.168.1.1"
-            protocol: "TCP"
-            length: 32
-            fullData: "BlaBla"
-        }
 
-        ListElement{
-            number: 1
-            timestamp: "00.00.01"
-            source: "192.168.1.1"
-            destination: "192.168.1.1"
-            protocol: "TCP"
-            length: 32
-            fullData: "BlaBla"
-        }
-        ListElement{
-            number: 1
-            timestamp: "00.00.01"
-            source: "192.168.1.1"
-            destination: "192.168.1.1"
-            protocol: "TCP"
-            length: 32
-            fullData: "BlaBla"
-        }
+
     }
 }

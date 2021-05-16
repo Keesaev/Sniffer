@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <tst.h>
+#include <testpacket.h>
 #include <QQmlContext>
 
 
@@ -20,6 +21,7 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     qmlRegisterType<Test>("Test", 1, 1, "Test");
+    qmlRegisterType<TestPacket>("TestPacket", 1, 1, "TestPacket");
     engine.load(url);
 
     return app.exec();
