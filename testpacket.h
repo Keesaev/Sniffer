@@ -25,39 +25,15 @@ class TestPacket : public QObject
 public:
     explicit TestPacket(QObject *parent = nullptr);
     int number, timestamp;
-    QString sourceIp, destIp, protocol, length;
-    QVariantMap dataLinkFullData;
-    QVariantMap networkFullData;
-    QVariantMap transportFullData;
+    QString sourceIp, destIp, protocol, length, fullData;
 
-    Q_INVOKABLE int getNumber(){
-        return number;
-    }
-
-    Q_INVOKABLE int getTimestamp(){
-        return timestamp;
-    }
-    Q_INVOKABLE QString getSourceIp(){
-        return sourceIp;
-    }
-    Q_INVOKABLE QString getDestIp(){
-        return sourceIp;
-    }
-    Q_INVOKABLE QString getProtocol(){
-        return protocol;
-    }
-    Q_INVOKABLE QString getLength(){
-        return length;
-    }
-    Q_INVOKABLE QVariantMap getDataLinkFullData(){
-        return dataLinkFullData;
-    }
-    Q_INVOKABLE QVariantMap getNetworkFullData(){
-        return networkFullData;
-    }
-    Q_INVOKABLE QVariantMap getTransportFullData(){
-        return transportFullData;
-    }
+    Q_INVOKABLE int getNumber(){ return number; }
+    Q_INVOKABLE int getTimestamp(){ return timestamp; }
+    Q_INVOKABLE QString getSourceIp(){ return sourceIp; }
+    Q_INVOKABLE QString getDestIp(){ return sourceIp; }
+    Q_INVOKABLE QString getProtocol(){ return protocol; }
+    Q_INVOKABLE QString getLength(){ return length; }
+    Q_INVOKABLE QString getFullData() {return fullData; }
 
 signals:
 

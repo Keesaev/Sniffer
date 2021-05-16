@@ -17,8 +17,9 @@ Window{
                     source: packet.getSourceIp(),
                     destination: packet.getDestIp(),
                     protocol: packet.getProtocol(),
-                    length: packet.getLength()
-                })
+                    length: packet.getLength(),
+                    fullData: packet.getFullData()
+                });
     }
 
     // Кнопки-иконки сверху
@@ -120,7 +121,7 @@ Window{
 
             Text{
                 padding: {left: 5}
-                //text: listModel.get(listView.currentIndex).fullData
+                text: listModel.get(listView.currentIndex).fullData
             }
         }
     }

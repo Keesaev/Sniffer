@@ -9,10 +9,7 @@ Test::Test(QObject *parent) : QObject(parent)
     packet->destIp = "192.168.1.1";
     packet->protocol = "TCP";
     packet->length = "128";
-    QVariantMap m1 = {{"a", "b"}, {"a", "b"}, {"a", "b"}, {"a", "b"}};
-    packet->dataLinkFullData = m1;
-    packet->networkFullData = m1;
-    packet->transportFullData = m1;
+    packet->fullData = "Full data";
 
     timer = new QTimer();
     connect(timer, SIGNAL(timeout()), this, SLOT(onTimer()));
