@@ -5,8 +5,9 @@ import QtQuick.Window 2.0
 Rectangle{
     id: devicesListDelegate
     height: 40
-    width: ListView.view.width - 40
-    color: "lightgrey"
+    width: parent.width - 40
+    property var rectColor: "lightgrey"
+    color: rectColor
 
     Text{
         leftPadding: 50

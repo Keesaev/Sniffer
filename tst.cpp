@@ -4,7 +4,7 @@ Test::Test(QObject *parent) : QObject(parent)
 {
     packet = new TestPacket();
     packet->number = 1;
-    packet->timestamp = 100;
+    packet->timestamp = QTime::currentTime().toString("hh:mm:ss,zzzz");
     packet->sourceIp = "192.168.1.1";
     packet->destIp = "192.168.1.1";
     packet->protocol = "TCP";

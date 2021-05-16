@@ -58,8 +58,13 @@ Window {
 
             model: listModel
 
-            delegate: DevicesListDelegate{
-
+            delegate: MouseArea{
+                width: devsRect.width; height: 40
+                onClicked: listView.currentIndex = index
+                property string c: index == listView.currentIndex ? "lightblue" : "lightgrey"
+                DevicesListDelegate{
+                    rectColor: c
+                }
             }
         }
     }
@@ -99,6 +104,7 @@ Window {
                     onClicked: {
                         packetsView.show()
                         mainView.hide()
+                        console.log(listModel.get(listView.currentIndex).name)
                     }
                 }
                 Button{

@@ -6,6 +6,7 @@
 #include <QVariantMap>
 #include <QVariant>
 #include <qqml.h>
+#include <QDateTime>
 
 using namespace std;
 
@@ -24,11 +25,12 @@ class TestPacket : public QObject
     Q_PROPERTY(QVariantMap transportFullData READ getTransportFullData)*/
 public:
     explicit TestPacket(QObject *parent = nullptr);
-    int number, timestamp;
+    int number;
+    QString timestamp;
     QString sourceIp, destIp, protocol, length, fullData;
 
     Q_INVOKABLE int getNumber(){ return number; }
-    Q_INVOKABLE int getTimestamp(){ return timestamp; }
+    Q_INVOKABLE QString getTimestamp(){ return timestamp; }
     Q_INVOKABLE QString getSourceIp(){ return sourceIp; }
     Q_INVOKABLE QString getDestIp(){ return sourceIp; }
     Q_INVOKABLE QString getProtocol(){ return protocol; }
