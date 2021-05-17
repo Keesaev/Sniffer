@@ -70,15 +70,16 @@ bool Sniffer::initPcap(){
     }
 }
 
-void Sniffer::startLoopingCapture(int c){
+void Sniffer::startLoopingCapture(){
+    running = true;
     packetCount = 1;
-    if(c == -1){
-        while(true){
+    if(maxPacket == -1){
+        while(running){
             captureSinglePacket();
         }
     }
     else{
-        while(c--){
+        while(maxPacket-- && running){
             captureSinglePacket();
         }
     }
@@ -132,8 +133,11 @@ void Sniffer::captureSinglePacket(){
 }
 
 void Sniffer::stopCapture(){
+    running = false;
     pcap_close(m_handle);
 }
 
-
+void Sniffer::setMaxPacket(int c){
+    maxPacket = c;
+}
 

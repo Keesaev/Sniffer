@@ -22,35 +22,7 @@ Window{
                 });
     }
 
-    // Кнопки-иконки сверху
-    Row{
-        id: iconsRow
-        leftPadding: 10; topPadding: 10; bottomPadding: 10; rightPadding: 10
-        spacing: 5
-        Image{
-            source: "Images/Play.png"
-            width: 30; height: 30
 
-            MouseArea{
-                anchors.fill: parent
-                onClicked: {
-                    // Start
-                }
-            }
-        }
-        Image{
-            source: "Images/Stop.png"
-            width: 30; height: 30
-
-            MouseArea{
-                anchors.fill: parent
-                onClicked: {
-                    Qt.quit()
-                    // Stop
-                }
-            }
-        }
-    }
 
     // Заголовок таблицы
     PacketsViewHeader{

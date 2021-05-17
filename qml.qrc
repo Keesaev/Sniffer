@@ -5,6 +5,7 @@
         <file>DevicesListDelegate.qml</file>
         <file>PacketsViewCell.qml</file>
         <file>PacketsViewHeader.qml</file>
+        <file>IconsRow.qml</file>
     </qresource>
     <qresource prefix="/Images">
         <file>Play.png</file>

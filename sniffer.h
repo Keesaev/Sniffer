@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QDateTime>
 #include <QDebug>
-#include <qqml.h>
 
 #include <pcap/pcap.h>
 #include <sstream>
@@ -21,19 +20,20 @@ using namespace std;
 class Sniffer : public QObject
 {
     Q_OBJECT
-    QML_ELEMENT
 
     char *m_dev;
     pcap_t *m_handle;
     void captureSinglePacket();
-    int packetCount;
+    int packetCount, maxPacket;
+    bool running = false;
 public:
     explicit Sniffer(QObject *parent = nullptr);
-    Q_INVOKABLE QVariantMap getDevs();
-    Q_INVOKABLE void setDev(QString d);
-    Q_INVOKABLE bool initPcap();
-    Q_INVOKABLE void startLoopingCapture(int c);
-    Q_INVOKABLE void stopCapture();
+    QVariantMap getDevs();
+    void setDev(QString d);
+    void setMaxPacket(int c);
+    bool initPcap();
+    void startLoopingCapture();
+    void stopCapture();
 signals:
     void packetDeserialized(PacketData *packet);
 };

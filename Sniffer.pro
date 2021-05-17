@@ -15,6 +15,7 @@ SOURCES += \
         network.cpp \
         packetdata.cpp \
         sniffer.cpp \
+        snifferwrapper.cpp \
         tcp.cpp \
         testpacket.cpp \
         tst.cpp \
@@ -44,6 +45,7 @@ HEADERS += \
     network.h \
     packetdata.h \
     sniffer.h \
+    snifferwrapper.h \
     tcp.h \
     testpacket.h \
     tst.h \

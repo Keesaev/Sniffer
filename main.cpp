@@ -1,7 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include <sniffer.h>
+#include <snifferwrapper.h>
 #include <packetdata.h>
 
 int main(int argc, char *argv[])
@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
         if (!obj && url == objUrl)
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
-    qmlRegisterType<Sniffer>("Sniffer", 1, 1, "Sniffer");
+    qmlRegisterType<SnifferWrapper>("SnifferWrapper", 1, 1, "SnifferWrapper");
     qmlRegisterType<PacketData>("PacketData", 1, 1, "PacketData");
     engine.load(url);
 
