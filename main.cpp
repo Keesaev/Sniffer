@@ -1,9 +1,8 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <tst.h>
-#include <testpacket.h>
 #include <QQmlContext>
-
+#include <sniffer.h>
+#include <packetdata.h>
 
 int main(int argc, char *argv[])
 {
@@ -20,8 +19,8 @@ int main(int argc, char *argv[])
         if (!obj && url == objUrl)
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
-    qmlRegisterType<Test>("Test", 1, 1, "Test");
-    qmlRegisterType<TestPacket>("TestPacket", 1, 1, "TestPacket");
+    qmlRegisterType<Sniffer>("Sniffer", 1, 1, "Sniffer");
+    qmlRegisterType<PacketData>("PacketData", 1, 1, "PacketData");
     engine.load(url);
 
     return app.exec();

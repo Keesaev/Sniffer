@@ -10,7 +10,7 @@ Rectangle{
     color: rectColor
 
     Text{
-        leftPadding: 50
+        leftPadding: 20
 
         anchors {
             left: parent.left;

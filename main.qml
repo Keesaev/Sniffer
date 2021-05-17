@@ -1,7 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
-import Test 1.1
-import TestPacket 1.1
+import Sniffer 1.1
+import PacketData 1.1
 import QtQuick.Controls 2.0
 
 Window {
@@ -11,7 +11,7 @@ Window {
     height: 480
     visible: true
     title: qsTr("Выберите устройство")
-    property var devArray: test.getList()
+    property var devArray: sniffer.getDevs()
 
     ListModel{
         id: listModel
@@ -102,8 +102,13 @@ Window {
                 Button{
                     text: "Oк"
                     onClicked: {
-                        packetsView.show()
-                        mainView.hide()
+                        sniffer.setDev(listModel.get(listView.currentIndex).name)
+                        if(sniffer.initPcap()){
+                            packetsView.show()
+                            mainView.hide()
+                            sniffer.startLoopingCapture(100)
+                        }
+
                         console.log(listModel.get(listView.currentIndex).name)
                     }
                 }
@@ -119,13 +124,13 @@ Window {
 
     PacketsView{
         id: packetsView
-        visible: true
+        visible: false
     }
 
-    Test{
-        id: test
+    Sniffer{
+        id: sniffer
 
-        onPacketDeserialized:{
+        onPacketDeserialized: {
             packetsView.addPacketToView(packet)
         }
     }

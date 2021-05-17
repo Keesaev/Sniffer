@@ -2,7 +2,7 @@ import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Styles 1.4
-import TestPacket 1.1
+import PacketData 1.1
 
 Window{
     id: packetsView
