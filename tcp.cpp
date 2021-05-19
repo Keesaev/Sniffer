@@ -30,15 +30,15 @@ bool Tcp::isHeaderInvalid() {
 
 QString Tcp::getFullData(){
     QString s =
-        "\nProtocol:\tTCP\nSource port:\t" + QString::number(htons(tcpHeader.tcp_sport)) +
-        "\nDestination port:\t" + QString::number(htons(tcpHeader.tcp_dport)) +
-        "\nSequence number:\t" + QString::number(htonl(tcpHeader.tcp_seqn)) +
-        "\nAcknowledgment Number:\t" + QString::number(htonl(tcpHeader.tcp_ack)) +
-        "\nData offset:\t" + QString::number(getOffset()) +
-        "\nFlags:\t" + getFlags() +
-        "\nWindow size:\t" + QString::number(htons(tcpHeader.tcp_win)) +
-        "\nChecksum:\t" + QString::number(htons(tcpHeader.tcp_sum)) +
-        "\nUrgent Point:\t" + QString::number(htons(tcpHeader.tcp_urp));
+        "\nTCP\n\tSource port: " + QString::number(htons(tcpHeader.tcp_sport)) +
+        "\n\tDestination port: " + QString::number(htons(tcpHeader.tcp_dport)) +
+        "\n\tSequence number: " + QString::number(htonl(tcpHeader.tcp_seqn)) +
+        "\n\tAcknowledgment Number: " + QString::number(htonl(tcpHeader.tcp_ack)) +
+        "\n\tData offset: " + QString::number(getOffset()) +
+        "\n\tFlags: " + getFlags() +
+        "Window size: " + QString::number(htons(tcpHeader.tcp_win)) +
+        "\n\tChecksum: " + QString::number(htons(tcpHeader.tcp_sum)) +
+        "\n\tUrgent Point: " + QString::number(htons(tcpHeader.tcp_urp));
     return s;
 }
 
@@ -51,10 +51,10 @@ int Tcp::getOffset(){
 QString Tcp::getFlags(){
     QString s = "";
     if(tcpHeader.tcp_offx2 & 1)
-        s += "NC (Nonce Sum)\n";
+        s += "NC (Nonce Sum)\t";
     for(auto i : flags){
         if(tcpHeader.tcp_flags & i.first)
-            s += i.second;
+            s += i.second + "\t";
     }
     return s;
 }

@@ -6,9 +6,14 @@
         <file>PacketsViewCell.qml</file>
         <file>PacketsViewHeader.qml</file>
         <file>IconsRow.qml</file>
+        <file>ChartProtocolRect.qml</file>
     </qresource>
     <qresource prefix="/Images">
-        <file>Play.png</file>
-        <file>Stop.png</file>
+        <file>Icons/back.png</file>
+        <file>Icons/back_hovered.png</file>
+        <file>Icons/play.png</file>
+        <file>Icons/play_hovered.png</file>
+        <file>Icons/stop.png</file>
+        <file>Icons/stop_hovered.png</file>
     </qresource>
 </RCC>

@@ -6,9 +6,13 @@ import PacketData 1.1
 
 Window{
     id: packetsView
-    width: 800
+    width: 1000
     height: 600
     visible: false
+
+    signal startPressed()
+    signal stopPressed()
+    signal backPressed()
 
     function addPacketToView(packet){
         listModel.append({
@@ -22,85 +26,147 @@ Window{
                 });
     }
 
+    function clearModel(){
+        listModel.clear()
 
-
-    // Заголовок таблицы
-    PacketsViewHeader{
-        id: headerRect
-        width: parent.width; height: 20
-        anchors{
-            top: iconsRow.bottom
-            left: parent.left
-            right: parent.right
-        }
     }
 
-    // Таблица с пакетами
     Rectangle{
-        id: packetsRect
-        width: parent.width; height: parent.height
-        anchors {
-            top: headerRect.bottom;
-            left: parent.left;
-            right: parent.right
-            bottom: fullDataRect.top
-        }
+       id: topRect
+       width: parent.width; height: parent.height * 0.7
 
-        ListView{
-            id: listView
-            anchors.fill: packetsRect
-            width: parent.width; height: parent.height
+       anchors{
+           left: parent.left
+           right: parent.right
+           top: parent.top
+           bottom: bottomRect.top
+       }
 
-            clip: true
-            ScrollBar.vertical: ScrollBar{}
+       Rectangle{
+           id: leftRect
+           width: topRect.width * 0.7; height: topRect.height
+           anchors{
+               left: topRect.left
+               top: topRect.top
+               bottom: topRect.bottom
+           }
 
-            model: listModel
+           // Ряд иконок
+           IconsRow{
+               id: iconsRow
 
-            delegate: MouseArea{
-                width: packetsRect.width; height: 20
-                onClicked: {
-                    listView.currentIndex = index
-                }
-                property string rowColor: index == listView.currentIndex ? "lightblue" : "white"
+               onStartPressed: {
+                   packetsView.startPressed()
+               }
+               onStopPressed: {
+                   packetsView.stopPressed()
+               }
+           }
 
-                Row{
-                    height: 20; width: parent.width
-                    PacketsViewCell { cellText: number; cellWidth: parent.width / 10; cellColor: rowColor }
-                    PacketsViewCell { cellText: timestamp; cellWidth: parent.width / 4; cellColor: rowColor }
-                    PacketsViewCell { cellText: source; cellColor: rowColor }
-                    PacketsViewCell { cellText: destination; cellColor: rowColor }
-                    PacketsViewCell { cellText: protocol; cellColor: rowColor }
-                    PacketsViewCell { cellText: length; cellWidth: parent.width; cellColor: rowColor }
-                }
-            }
-        }
+           // Заголовок таблицы
+           PacketsViewHeader {
+               id: headerRect
+               width: parent.width; height: 20
+               anchors {
+                   top: iconsRow.bottom
+                   left: parent.left
+                   right: parent.right
+               }
+           }
+
+           // Таблица с пакетами
+           Rectangle{
+               id: packetsRect
+               width: parent.width; height: parent.height
+               anchors {
+                   top: headerRect.bottom;
+                   left: parent.left;
+                   right: parent.right
+                   bottom: parent.bottom
+               }
+
+               ListView{
+                   id: listView
+                   anchors.fill: packetsRect
+                   width: parent.width; height: parent.height
+                   clip: true
+                   ScrollBar.vertical: ScrollBar{}
+                   model: listModel
+
+                   // Анимации
+                   add: Transition{
+                       NumberAnimation { property: "opacity"; from: 0; to: 1.0; duration: 200 }
+                       NumberAnimation { property: "scale"; from: 0; to: 1.0; duration: 200 }
+                   }
+
+                   delegate: MouseArea{
+                       width: packetsRect.width; height: 20
+                       onClicked: {
+                           listView.currentIndex = index
+                       }
+                       property string rowColor: index == listView.currentIndex ? "lightblue" : "white"
+
+                       Row{
+                           height: 20; width: parent.width
+                           PacketsViewCell { cellText: number; cellWidth: parent.width / 10; cellColor: rowColor }
+                           PacketsViewCell { cellText: timestamp; cellWidth: parent.width / 4; cellColor: rowColor }
+                           PacketsViewCell { cellText: source; cellColor: rowColor }
+                           PacketsViewCell { cellText: destination; cellColor: rowColor }
+                           PacketsViewCell { cellText: protocol; cellColor: rowColor }
+                           PacketsViewCell { cellText: length; cellWidth: parent.width; cellColor: rowColor }
+                       }
+                   }
+               }
+           }
+       }
+
+       // Диаграммы
+       Rectangle{
+           id: rightRect
+           width: topRect.width * 0.3; height: topRect.height
+           border { width: 1; color: "grey"}
+
+           anchors{
+               left: leftRect.right
+               right: topRect.right
+               top: topRect.top
+               bottom: topRect.bottom
+           }
+       }
     }
 
-    // Область с описанием выбранного пакета
     Rectangle{
-        id: fullDataRect
-        width: parent.width; height: parent.height / 3
+        id: bottomRect
+        width: parent.width; height: parent.height * 0.3
+
         anchors{
-            left: parent.left
-            right: parent.right
             bottom: parent.bottom
+            left: parent.left
+            right: parent.right
         }
-        border{ width: 1; color: "grey" }
 
-        ScrollView{
-            anchors.fill: parent
-            clip: true
+        // Область с описанием выбранного пакета
+        Rectangle{
+            id: fullDataRect
+            width: parent.width; height: parent.height
+            anchors{
+                fill: parent
+            }
+            border{ width: 1; color: "grey" }
 
-            Text{
-                padding: {left: 5}
-                text: listModel.get(listView.currentIndex).fullData
+            ScrollView{
+                anchors.fill: parent
+                clip: true
+
+                Text{
+                    padding: {left: 5}
+                    text: listModel.get(listView.currentIndex).fullData
+                }
             }
         }
     }
 
     ListModel{
         id: listModel
-
-
     }
 }

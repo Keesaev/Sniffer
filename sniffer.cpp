@@ -9,7 +9,6 @@ Sniffer::Sniffer(QObject *parent) : QObject(parent)
 }
 
 // Возвращаем список доступных устройств
-// в виде vector<pair<имя, описание>>
 QVariantMap Sniffer::getDevs(){
     QVariantMap d;
     pcap_if_t *alldevsp;
@@ -23,7 +22,10 @@ QVariantMap Sniffer::getDevs(){
     }
     else{
         while(alldevsp->next != NULL){
-            d.insert(QString(alldevsp->name), QString(alldevsp->description));
+            QString desc = alldevsp->description;
+            if(desc.isEmpty())
+                desc = "No description available";
+            d.insert(QString(alldevsp->name), desc);
             alldevsp = alldevsp->next;
         }
         return d;
@@ -70,28 +72,31 @@ bool Sniffer::initPcap(){
     }
 }
 
+// Вызываем captureSinglePacket в цикле, контроллируем его
+// переменной m_running
 void Sniffer::startLoopingCapture(){
-    running = true;
-    packetCount = 1;
-    if(maxPacket == -1){
-        while(running){
+    m_running = true;
+    m_packetCount = 1;
+    if(m_maxPacket == -1){
+        while(m_running){
             captureSinglePacket();
         }
     }
     else{
-        while(maxPacket-- && running){
+        while(m_maxPacket-- && m_running){
             captureSinglePacket();
         }
     }
 }
 
+// Захватываем один пакет и издаем сигнал
 void Sniffer::captureSinglePacket(){
 
     pcap_pkthdr *header;
     const u_char *bytes;
     int retVal = pcap_next_ex(m_handle, &header, &bytes);
     if(retVal != 1){
-        // Сломанный пакет TODO
+        qDebug() << "COULDN CAPTURE";
         return;
     }
 
@@ -114,7 +119,7 @@ void Sniffer::captureSinglePacket(){
     QDateTime time;
     time.setTime_t(header->ts.tv_sec);
 
-    packet->number = packetCount;
+    packet->number = m_packetCount;
     packet->fullData = datalink->getFullData() +
             network->getFullData() +
             transport->getFullData();
@@ -126,18 +131,19 @@ void Sniffer::captureSinglePacket(){
 
     emit packetDeserialized(packet);
 
-    packetCount++;
+    m_packetCount++;
     delete datalink;
     delete network;
     delete transport;
+    packet->deleteLater();
 }
 
 void Sniffer::stopCapture(){
-    running = false;
-    pcap_close(m_handle);
+    m_running = false;
+    //pcap_close(m_handle);
 }
 
 void Sniffer::setMaxPacket(int c){
-    maxPacket = c;
+    m_maxPacket = c;
 }
 

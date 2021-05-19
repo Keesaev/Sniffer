@@ -23,9 +23,9 @@ bool Udp::isHeaderInvalid() {
 
 QString Udp::getFullData() {
     QString s =
-        "\nProtocol:\tUDP\nSource port:\t" + QString::number(ntohs(udpHeader.udp_sport)) +
-        "\nDestination port:\t" + QString::number(ntohs(udpHeader.udp_dport)) +
-        "\nHeader length:\t" + QString::number(ntohs(udpHeader.udp_len)) +
-        "\nChecksum:\t" + QString::number(ntohs(udpHeader.udp_chksum));
+        "\nUDP\n\tSource port: " + QString::number(ntohs(udpHeader.udp_sport)) +
+        "\n\tDestination port: " + QString::number(ntohs(udpHeader.udp_dport)) +
+        "\n\tHeader length: " + QString::number(ntohs(udpHeader.udp_len)) +
+        "\n\tChecksum: " + QString::number(ntohs(udpHeader.udp_chksum));
     return s;
 }

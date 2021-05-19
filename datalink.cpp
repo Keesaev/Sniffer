@@ -22,9 +22,9 @@ void DataLink::deserializeHeader(const u_char *bytes){
 
 QString DataLink::getFullData(){
     QString s =
-        "\nSource:\t" + getMac(ethernetHeader.ether_shost) +
-        "\nDestination:\t" + getMac(ethernetHeader.ether_dhost) +
-        "\nType:\t" + QString::number(ethernetHeader.ether_type);
+        "Ethernet II\n\tSource: " + getMac(ethernetHeader.ether_shost) +
+        "\n\tDestination: " + getMac(ethernetHeader.ether_dhost) +
+        "\n\tType: " + QString::number(ethernetHeader.ether_type);
     return s;
 }
 

@@ -21,7 +21,7 @@ public:
     Q_INVOKABLE int getNumber(){ return number; }
     Q_INVOKABLE QString getTimestamp(){ return timestamp; }
     Q_INVOKABLE QString getSourceIp(){ return sourceIp; }
-    Q_INVOKABLE QString getDestIp(){ return sourceIp; }
+    Q_INVOKABLE QString getDestIp(){ return destIp; }
     Q_INVOKABLE QString getProtocol(){ return protocol; }
     Q_INVOKABLE QString getLength(){ return length; }
     Q_INVOKABLE QString getFullData() {return fullData; }

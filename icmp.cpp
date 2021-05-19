@@ -23,10 +23,10 @@ bool Icmp::isHeaderInvalid() {
 
 QString Icmp::getFullData() {
     QString s =
-        "\nProtocol:\tICMP\nType:\t" + QString::number(static_cast<int>(icmpHeader.icmp_type)) +
-        "\nCode:\t" + QString::number(static_cast<int>(icmpHeader.icmp_code)) +
-        "\nChecksum:\t" + QString::number(ntohs(icmpHeader.icmp_sum)) +
-        "\nOptions:\t" + QString::number(ntohs(icmpHeader.icmp_rest));
+        "\nICMP\n\tType: " + QString::number(static_cast<int>(icmpHeader.icmp_type)) +
+        "\n\tCode: " + QString::number(static_cast<int>(icmpHeader.icmp_code)) +
+        "\n\tChecksum: " + QString::number(ntohs(icmpHeader.icmp_sum)) +
+        "\n\tOptions: " + QString::number(ntohs(icmpHeader.icmp_rest));
 
     return s;
 }

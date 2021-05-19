@@ -24,8 +24,8 @@ class Sniffer : public QObject
     char *m_dev;
     pcap_t *m_handle;
     void captureSinglePacket();
-    int packetCount, maxPacket;
-    bool running = false;
+    int m_packetCount, m_maxPacket;
+    bool m_running = false;
 public:
     explicit Sniffer(QObject *parent = nullptr);
     QVariantMap getDevs();

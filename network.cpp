@@ -7,19 +7,19 @@ Network::Network(QObject *parent) : QObject(parent)
 
 QString Network::getFullData(){
     QString s =
-        "\nVersion:\t" + QString::number(getVersion()) +
-        "\nInternet Header Length:\t" + QString::number(getHeaderSize()) +
-        "\nDifferenciated services code point:\t" + getDiffServ() +
-        "\nExplicit Congestion Notification:\t" + getECN() +
-        "\nTotal length:\t" + QString::number(ntohs(ipHeader.ip_len)) +
-        "\nIdentification:\t" + QString::number(ntohs(ipHeader.ip_id)) +
-        "\nFlags:\t" + getFlags() +
-        "\nFragment offset:\t" + QString::number(getOffset()) +
-        "\nTime to live:\t" + QString::number(static_cast<int>(ipHeader.ip_ttl)) +
-        "\nProtocol:\t" + getProtocolName() +
-        "\nHeader checksum:\t" + QString::number(ntohs(ipHeader.ip_sum)) +
-        "\nSource:\t" + getAddress(ipHeader.ip_src) +
-        "\nDestination:\t" + getAddress(ipHeader.ip_dst);
+        "\nIPv4\n\tVersion: " + QString::number(getVersion()) +
+        "\n\tInternet Header Length: " + QString::number(getHeaderSize()) +
+        "\n\tDifferenciated services code point: " + getDiffServ() +
+        "\n\tExplicit Congestion Notification: " + getECN() +
+        "\n\tTotal length: " + QString::number(ntohs(ipHeader.ip_len)) +
+        "\n\tIdentification: " + QString::number(ntohs(ipHeader.ip_id)) +
+        "\n\tFlags: " + getFlags() +
+        "\n\tFragment offset: " + QString::number(getOffset()) +
+        "\n\tTime to live: " + QString::number(static_cast<int>(ipHeader.ip_ttl)) +
+        "\n\tProtocol: " + getProtocolName() +
+        "\n\tHeader checksum: " + QString::number(ntohs(ipHeader.ip_sum)) +
+        "\n\tSource: " + getAddress(ipHeader.ip_src) +
+        "\n\tDestination: " + getAddress(ipHeader.ip_dst);
     return s;
 }
 

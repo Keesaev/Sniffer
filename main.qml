@@ -7,7 +7,7 @@ import QtQuick.Controls 2.0
 Window {
 
     id: mainView
-    width: 640
+    width: 700
     height: 480
     visible: true
     title: qsTr("Выберите устройство")
@@ -102,10 +102,11 @@ Window {
                 Button{
                     text: "Oк"
                     onClicked: {
-
                         packetsView.show()
                         mainView.hide()
 
+                        snifferWrapper.setDev(listModel.get(listView.currentIndex).name)
+                        snifferWrapper.initPcap()
                     }
                 }
                 Button{
@@ -122,19 +123,14 @@ Window {
         id: packetsView
         visible: false
 
-        // Кнопки-иконки сверху
-        IconsRow{
-            id: iconsRow
-
-            onPlayPressed: {
-                snifferWrapper.setDev(listModel.get(listView.currentIndex).name)
-                snifferWrapper.initPcap()
-                snifferWrapper.startCapture(100)
-            }
-            onStopPressed: {
-                snifferWrapper.stopCapture()
-            }
+        onStartPressed: {
+            snifferWrapper.startCapture(-1)
+            packetsView.clearModel()
         }
+        onStopPressed: {
+            snifferWrapper.stopCapture()
+        }
+
     }
 
     SnifferWrapper{
