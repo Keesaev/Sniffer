@@ -87,6 +87,36 @@ public:
     Q_INVOKABLE int count(){
         return m_packets.size();
     }
+
+    Q_INVOKABLE void save(){
+        QFile file("snifff.txt");
+        file.open(QIODevice::WriteOnly);
+        QDataStream stream(&file);
+        for(auto i : m_packets){
+            stream << i.number << i.sourceIp << i.destIp << i.protocol <<
+                      i.length << i.fullData << i.timestamp;
+        }
+        file.close();
+    }
+
+    Q_INVOKABLE void load(){
+        QFile file("snifff.txt");
+        file.open(QIODevice::ReadOnly);
+        QDataStream stream(&file);
+
+        beginResetModel();
+        m_packets.clear();
+
+        while(!stream.atEnd()){
+            PacketData i;
+            stream >> i.number >> i.sourceIp >> i.destIp >> i.protocol >>
+                    i.length >> i.fullData >> i.timestamp;
+            m_packets.push_back(i);
+        }
+
+        endResetModel();
+        file.close();
+    }
 };
 
 #endif // PACKETMODEL_H

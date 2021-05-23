@@ -16,5 +16,9 @@
         <file>Icons/play_hovered.png</file>
         <file>Icons/stop.png</file>
         <file>Icons/stop_hovered.png</file>
+        <file>Icons/open.png</file>
+        <file>Icons/open_hovered.png</file>
+        <file>Icons/save.png</file>
+        <file>Icons/save_hovered.png</file>
     </qresource>
 </RCC>

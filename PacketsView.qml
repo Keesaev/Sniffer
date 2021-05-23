@@ -25,6 +25,10 @@ Window{
         listView.currentIndex = -1
     }
 
+    function loadModel(){
+        packetModel.load()
+    }
+
     Rectangle{
        id: topRect
        width: parent.width; height: parent.height * 0.7
@@ -55,6 +59,20 @@ Window{
                }
                onStopPressed: {
                    packetsView.stopPressed()
+               }
+               // Возможно нужно ввести сюда property running, а в IconsRow parent.running
+               // Плюс диалоговое окно
+               // Это сделать
+               onSavePressed: {
+                   iconsRow.stop()
+                   packetsView.stopPressed()
+                   packetModel.save()
+               }
+               // И это
+               onOpenPressed: {
+                   iconsRow.stop()
+                   packetsView.stopPressed()
+                   packetModel.load()
                }
            }
 
