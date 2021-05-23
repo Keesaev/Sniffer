@@ -1,8 +1,11 @@
-#include <QGuiApplication>
+#include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <snifferwrapper.h>
+#include <packetmodel.h>
 #include <packetdata.h>
+
+#include <QMetaType>
 
 int main(int argc, char *argv[])
 {
@@ -10,7 +13,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
 
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
@@ -20,7 +23,8 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     qmlRegisterType<SnifferWrapper>("SnifferWrapper", 1, 1, "SnifferWrapper");
-    qmlRegisterType<PacketData>("PacketData", 1, 1, "PacketData");
+    qmlRegisterType<PacketModel>("PacketModel", 1, 1, "PacketModel");
+    qRegisterMetaType<PacketData>();
     engine.load(url);
 
     return app.exec();

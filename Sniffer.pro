@@ -1,6 +1,6 @@
-QT += quick
+QT += core widgets quick
 
-CONFIG += c++11
+CONFIG += c++11 charts
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -14,6 +14,7 @@ SOURCES += \
         main.cpp \
         network.cpp \
         packetdata.cpp \
+        packetmodel.cpp \
         sniffer.cpp \
         snifferwrapper.cpp \
         tcp.cpp \
@@ -44,6 +45,7 @@ HEADERS += \
     icmp.h \
     network.h \
     packetdata.h \
+    packetmodel.h \
     sniffer.h \
     snifferwrapper.h \
     tcp.h \

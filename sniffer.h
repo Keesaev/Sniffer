@@ -35,7 +35,7 @@ public:
     void startLoopingCapture();
     void stopCapture();
 signals:
-    void packetDeserialized(PacketData *packet);
+    void packetDeserialized(const PacketData packet);
 };
 
 #endif // SNIFFER_H

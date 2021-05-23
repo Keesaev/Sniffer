@@ -1,30 +1,21 @@
 #ifndef PACKETDATA_H
 #define PACKETDATA_H
 
-#include <QObject>
-#include <string>
-#include <vector>
-#include <pcap/pcap.h>
-#include <qqml.h>
+#include <QTime>
+#include <QMetaType>
 
-using namespace std;
-
-class PacketData : public QObject
+class PacketData
 {
-    Q_OBJECT
-    QML_ELEMENT
 public:
-    explicit PacketData(QObject *parent = nullptr);
+    PacketData();
+    PacketData(int n, QString sIp, QString dIp, QString p, QString l, QString f,QTime t) :
+        number(n), sourceIp(sIp), destIp(dIp), protocol(p), length(l), fullData(f), timestamp(t){
 
+    }
     int number;
-    QString timestamp, sourceIp, destIp, protocol, length, fullData;
-    Q_INVOKABLE int getNumber(){ return number; }
-    Q_INVOKABLE QString getTimestamp(){ return timestamp; }
-    Q_INVOKABLE QString getSourceIp(){ return sourceIp; }
-    Q_INVOKABLE QString getDestIp(){ return destIp; }
-    Q_INVOKABLE QString getProtocol(){ return protocol; }
-    Q_INVOKABLE QString getLength(){ return length; }
-    Q_INVOKABLE QString getFullData() {return fullData; }
+    QString sourceIp, destIp, protocol, length, fullData;
+    QTime timestamp;
 };
 
+Q_DECLARE_METATYPE(PacketData)
 #endif // PACKETDATA_H

@@ -115,19 +115,20 @@ void Sniffer::captureSinglePacket(){
     transport = Factory::makeTransport(network->getProtocol());
     transport->deserializeHeader(bytes, datalink->getHeaderSize() + network->getHeaderSize());
 
-    PacketData *packet = new PacketData();
+    PacketData packet;
     QDateTime time;
     time.setTime_t(header->ts.tv_sec);
 
-    packet->number = m_packetCount;
-    packet->fullData = datalink->getFullData() +
+    packet.number = m_packetCount;
+    packet.fullData = datalink->getFullData() +
             network->getFullData() +
             transport->getFullData();
-    packet->timestamp = time.time().toString("hh:mm:ss,zzzz");
-    packet->sourceIp = network->getSourceIp();
-    packet->destIp = network->getDestIp();
-    packet->protocol = network->getProtocolName();
-    packet->length = QString::number(header->len);
+    //packet->timestamp = time.time().toString("hh:mm:ss,zzzz");
+    packet.timestamp = time.time();
+    packet.sourceIp = network->getSourceIp();
+    packet.destIp = network->getDestIp();
+    packet.protocol = network->getProtocolName();
+    packet.length = QString::number(header->len);
 
     emit packetDeserialized(packet);
 
@@ -135,7 +136,6 @@ void Sniffer::captureSinglePacket(){
     delete datalink;
     delete network;
     delete transport;
-    packet->deleteLater();
 }
 
 void Sniffer::stopCapture(){

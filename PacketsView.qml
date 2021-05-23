@@ -2,7 +2,7 @@ import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Controls.Styles 1.4
-import PacketData 1.1
+import PacketModel 1.1
 
 Window{
     id: packetsView
@@ -15,20 +15,14 @@ Window{
     signal backPressed()
 
     function addPacketToView(packet){
-        listModel.append({
-                    number: packet.getNumber(),
-                    timestamp: packet.getTimestamp(),
-                    source: packet.getSourceIp(),
-                    destination: packet.getDestIp(),
-                    protocol: packet.getProtocol(),
-                    length: packet.getLength(),
-                    fullData: packet.getFullData()
-                });
+        packetModel.addPacket(packet)
+        protocolChart.appendSlice(packetModel.get(packetModel.count() - 1).protocol)
+        timeChart.addPoint()
     }
 
     function clearModel(){
-        listModel.clear()
-
+        packetModel.clear()
+        listView.currentIndex = -1
     }
 
     Rectangle{
@@ -56,6 +50,7 @@ Window{
                id: iconsRow
 
                onStartPressed: {
+                   protocolChart.clearPie()
                    packetsView.startPressed()
                }
                onStopPressed: {
@@ -91,7 +86,7 @@ Window{
                    width: parent.width; height: parent.height
                    clip: true
                    ScrollBar.vertical: ScrollBar{}
-                   model: listModel
+                   model: packetModel
 
                    // Анимации
                    add: Transition{
@@ -109,9 +104,9 @@ Window{
                        Row{
                            height: 20; width: parent.width
                            PacketsViewCell { cellText: number; cellWidth: parent.width / 10; cellColor: rowColor }
-                           PacketsViewCell { cellText: timestamp; cellWidth: parent.width / 4; cellColor: rowColor }
-                           PacketsViewCell { cellText: source; cellColor: rowColor }
-                           PacketsViewCell { cellText: destination; cellColor: rowColor }
+                           PacketsViewCell { cellText: Qt.formatTime(timestamp, "hh:mm:ss"); cellWidth: parent.width / 4; cellColor: rowColor }
+                           PacketsViewCell { cellText: sourceIp; cellColor: rowColor }
+                           PacketsViewCell { cellText: destIp; cellColor: rowColor }
                            PacketsViewCell { cellText: protocol; cellColor: rowColor }
                            PacketsViewCell { cellText: length; cellWidth: parent.width; cellColor: rowColor }
                        }
@@ -120,19 +115,38 @@ Window{
            }
        }
 
-       // Диаграммы
-       Rectangle{
-           id: rightRect
-           width: topRect.width * 0.3; height: topRect.height
-           border { width: 1; color: "grey"}
+        // Диаграммы
+        Rectangle{
+            id: rightRect
+            width: topRect.width * 0.3; height: topRect.height
+            border { width: 1; color: "grey"}
 
-           anchors{
-               left: leftRect.right
-               right: topRect.right
-               top: topRect.top
-               bottom: topRect.bottom
-           }
-       }
+            anchors{
+                left: leftRect.right
+                right: topRect.right
+                top: topRect.top
+                bottom: topRect.bottom
+            }
+
+            ProtocolChart{
+                id: protocolChart
+                anchors{
+                    left: parent.left
+                    right: parent.right
+                    top: parent.top
+                }
+            }
+
+            TimeChart{
+                id: timeChart
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    top: protocolChart.bottom
+                    bottom: parent.bottom
+                }
+            }
+        }
     }
 
     Rectangle{
@@ -159,14 +173,14 @@ Window{
                 clip: true
 
                 Text{
-                    padding: {left: 5}
-                    text: listModel.get(listView.currentIndex).fullData
+                    padding: { left: 5}
+                    text: listView.currentIndex > -1 ? packetModel.get(listView.currentIndex).fullData : ""
                 }
             }
         }
     }
 
-    ListModel{
-        id: listModel
+    PacketModel{
+        id: packetModel
     }
 }

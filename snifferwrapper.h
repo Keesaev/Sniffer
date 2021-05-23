@@ -21,7 +21,7 @@ public:
     Q_INVOKABLE void setDev(QString d);
     Q_INVOKABLE bool initPcap();
 signals:
-    void packetDeserialized(PacketData *packet);
+    void packetDeserialized(const PacketData packet);
 };
 
 #endif // SNIFFERWRAPPER_H
