@@ -54,25 +54,33 @@ Window{
                id: iconsRow
 
                onStartPressed: {
-                   protocolChart.clearPie()
-                   packetsView.startPressed()
+                   if(!running){
+                       protocolChart.clearPie()
+                       packetsView.startPressed()
+                   }
                }
                onStopPressed: {
-                   packetsView.stopPressed()
+                   if(iconsRow.running)
+                      packetsView.stopPressed()
                }
-               // Возможно нужно ввести сюда property running, а в IconsRow parent.running
-               // Плюс диалоговое окно
-               // Это сделать
                onSavePressed: {
-                   iconsRow.stop()
-                   packetsView.stopPressed()
+                   if(iconsRow.running)
+                       packetsView.stopPressed()
+                   iconsRow.setStopped()
                    packetModel.save()
                }
-               // И это
                onOpenPressed: {
-                   iconsRow.stop()
-                   packetsView.stopPressed()
+                   if(iconsRow.running)
+                       packetsView.stopPressed()
+                   iconsRow.setStopped()
                    packetModel.load()
+               }
+               onBackPressed: {
+                   if(running)
+                       packetsView.stopPressed()
+                   iconsRow.setStopped()
+                   clearModel()
+                   packetsView.backPressed()
                }
            }
 

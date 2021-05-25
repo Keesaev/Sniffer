@@ -4,12 +4,12 @@ SnifferWrapper::SnifferWrapper(QObject *parent) : QObject(parent)
 {
     sniffer = new Sniffer();
     connect(sniffer, &Sniffer::packetDeserialized, this, &SnifferWrapper::packetDeserialized);
+    connect(&thread, &QThread::started, sniffer, &Sniffer::startLoopingCapture);
 }
 
 void SnifferWrapper::startCapture(int c){
     sniffer->moveToThread(&thread);
     sniffer->setMaxPacket(c);
-    connect(&thread, &QThread::started, sniffer, &Sniffer::startLoopingCapture);
     thread.start();
 }
 
@@ -28,4 +28,8 @@ bool SnifferWrapper::initPcap(){
 
 QVariantMap SnifferWrapper::getDevs(){
     return sniffer->getDevs();
+}
+
+void SnifferWrapper::closeHandle(){
+    sniffer->closeHandle();
 }

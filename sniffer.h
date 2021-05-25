@@ -34,6 +34,7 @@ public:
     bool initPcap();
     void startLoopingCapture();
     void stopCapture();
+    void closeHandle();
 signals:
     void packetDeserialized(const PacketData packet);
 };

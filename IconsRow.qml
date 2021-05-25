@@ -23,16 +23,9 @@ Row{
     property string openImg: "Images/Icons/open.png"
     property string openHoveredImg: "Images/Icons/open_hovered.png"
 
-    function stop(){
-        startStopBtn.startStopSrc = startImg
-        stopPressed()
+    function setStopped(){
         running = false
-    }
-
-    function start(){
-        startStopBtn.startStopSrc = stopImg
-        startPressed()
-        running = true
+        startStopBtn.startStopSrc = startImg
     }
 
     Image {

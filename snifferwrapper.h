@@ -20,6 +20,7 @@ public:
     Q_INVOKABLE QVariantMap getDevs();
     Q_INVOKABLE void setDev(QString d);
     Q_INVOKABLE bool initPcap();
+    Q_INVOKABLE void closeHandle();
 signals:
     void packetDeserialized(const PacketData packet);
 };

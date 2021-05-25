@@ -123,7 +123,6 @@ void Sniffer::captureSinglePacket(){
     packet.fullData = datalink->getFullData() +
             network->getFullData() +
             transport->getFullData();
-    //packet->timestamp = time.time().toString("hh:mm:ss,zzzz");
     packet.timestamp = time.time();
     packet.sourceIp = network->getSourceIp();
     packet.destIp = network->getDestIp();
@@ -140,10 +139,14 @@ void Sniffer::captureSinglePacket(){
 
 void Sniffer::stopCapture(){
     m_running = false;
-    //pcap_close(m_handle);
 }
 
 void Sniffer::setMaxPacket(int c){
     m_maxPacket = c;
+}
+
+void Sniffer::closeHandle(){
+    m_running = false;
+    pcap_close(m_handle);
 }
 

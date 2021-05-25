@@ -123,13 +123,17 @@ Window {
         visible: false
 
         onStartPressed: {
-            snifferWrapper.startCapture(-1)
             packetsView.clearModel()
+            snifferWrapper.startCapture(-1)
         }
         onStopPressed: {
             snifferWrapper.stopCapture()
         }
-
+        onBackPressed: {
+            mainView.show()
+            packetsView.hide()
+            snifferWrapper.closeHandle()
+        }
     }
 
     SnifferWrapper{
