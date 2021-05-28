@@ -1,7 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
-import QtQuick.Controls.Styles 1.4
 import PacketModel 1.1
 
 Window{
@@ -23,10 +22,6 @@ Window{
     function clearModel(){
         packetModel.clear()
         listView.currentIndex = -1
-    }
-
-    function loadModel(){
-        packetModel.load()
     }
 
     Rectangle{
@@ -189,7 +184,7 @@ Window{
         Rectangle{
             id: fullDataRect
             width: parent.width; height: parent.height
-            anchors{
+            anchors {
                 fill: parent
             }
             border{ width: 1; color: "grey" }

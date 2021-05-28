@@ -13,7 +13,7 @@
 #include <basetransport.h>
 #include <unknowntransport.h>
 #include <factory.h>
-#include <packetdata.h>
+#include <packet.h>
 
 using namespace std;
 
@@ -36,7 +36,7 @@ public:
     void stopCapture();
     void closeHandle();
 signals:
-    void packetDeserialized(const PacketData packet);
+    void packetDeserialized(const Packet packet);
 };
 
 #endif // SNIFFER_H

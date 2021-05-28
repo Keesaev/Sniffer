@@ -1,10 +1,12 @@
-QT += core widgets quick
+QT += qml core gui widgets quick
 
 CONFIG += c++11 charts
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+
+QMAKE_LFLAGS_WINDOWS += /MANIFESTUAC:"level='requireAdministrator'"
 
 SOURCES += \
         basetransport.cpp \
@@ -13,13 +15,10 @@ SOURCES += \
         icmp.cpp \
         main.cpp \
         network.cpp \
-        packetdata.cpp \
         packetmodel.cpp \
         sniffer.cpp \
         snifferwrapper.cpp \
         tcp.cpp \
-        testpacket.cpp \
-        tst.cpp \
         udp.cpp \
         unknowntransport.cpp
 
@@ -44,12 +43,10 @@ HEADERS += \
     factory.h \
     icmp.h \
     network.h \
-    packetdata.h \
+    packet.h \
     packetmodel.h \
     sniffer.h \
     snifferwrapper.h \
     tcp.h \
-    testpacket.h \
-    tst.h \
     udp.h \
     unknowntransport.h

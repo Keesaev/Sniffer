@@ -22,7 +22,7 @@ public:
     Q_INVOKABLE bool initPcap();
     Q_INVOKABLE void closeHandle();
 signals:
-    void packetDeserialized(const PacketData packet);
+    void packetDeserialized(const Packet packet);
 };
 
 #endif // SNIFFERWRAPPER_H

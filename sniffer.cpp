@@ -115,9 +115,10 @@ void Sniffer::captureSinglePacket(){
     transport = Factory::makeTransport(network->getProtocol());
     transport->deserializeHeader(bytes, datalink->getHeaderSize() + network->getHeaderSize());
 
-    PacketData packet;
+    Packet packet;
     QDateTime time;
-    time.setTime_t(header->ts.tv_sec);
+    //time.setTime_t(header->ts.tv_sec);
+    time.setSecsSinceEpoch(header->ts.tv_sec);
 
     packet.number = m_packetCount;
     packet.fullData = datalink->getFullData() +

@@ -56,7 +56,7 @@ QString DataLink::getSingleHexRegister(int b){
             }
         }
         else{
-            res = ('0' + b);
+            res = (char)(48 + b);
         }
         return res;
 }

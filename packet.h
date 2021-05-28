@@ -4,11 +4,13 @@
 #include <QTime>
 #include <QMetaType>
 
-class PacketData
+class Packet
 {
 public:
-    PacketData();
-    PacketData(int n, QString sIp, QString dIp, QString p, QString l, QString f,QTime t) :
+    Packet(){
+
+    }
+    Packet(int n, QString sIp, QString dIp, QString p, QString l, QString f,QTime t) :
         number(n), sourceIp(sIp), destIp(dIp), protocol(p), length(l), fullData(f), timestamp(t){
 
     }
@@ -17,5 +19,5 @@ public:
     QTime timestamp;
 };
 
-Q_DECLARE_METATYPE(PacketData)
+Q_DECLARE_METATYPE(Packet)
 #endif // PACKETDATA_H
