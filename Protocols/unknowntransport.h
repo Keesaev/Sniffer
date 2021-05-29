@@ -2,7 +2,7 @@
 #define UNKNOWNTRANSPORT_H
 
 #include <QObject>
-#include <basetransport.h>
+#include <Protocols/basetransport.h>
 #include <vector>
 #include <string>
 

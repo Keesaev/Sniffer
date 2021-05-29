@@ -8,10 +8,10 @@
 #include <pcap/pcap.h>
 #include <sstream>
 
-#include <datalink.h>
-#include <network.h>
-#include <basetransport.h>
-#include <unknowntransport.h>
+#include <Protocols/datalink.h>
+#include <Protocols/network.h>
+#include <Protocols/basetransport.h>
+#include <Protocols/unknowntransport.h>
 #include <factory.h>
 #include <packet.h>
 
