@@ -79,14 +79,6 @@ Window {
         height: 70
         width: parent.width
 
-        Button{
-            leftInset: 20
-            topInset: 10
-            leftPadding: 30
-            topPadding: 15
-            text: "Открыть файл"
-        }
-
         Rectangle{
             anchors {
                 right: parent.right
@@ -142,5 +134,9 @@ Window {
         onPacketDeserialized: {
             packetsView.addPacketToView(packet)
         }
+    }
+
+    onClosing: {
+        Qt.quit()
     }
 }

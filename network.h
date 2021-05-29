@@ -54,10 +54,16 @@ class Network : public QObject
         {8, "EGP"},
         {9, "IGP"},
         {17, "UDP"},
+        {29, "ISO-TP4"},
+        {30, "NETBLT"},
         {41, "IPv6"},
         {56, "TLSP"},
         {88, "EIGRP"},
-        {89, "OSPF"}
+        {89, "OSPF"},
+        {127, "CRUDP"},
+        {132, "FC"},
+        {141, "WESP"},
+        {142, "ROHC"}
     };
 
     // https://en.wikipedia.org/wiki/IPv4#Header

@@ -3,45 +3,85 @@ import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
 import PacketModel 1.1
 
-Window{
-    id: packetsView
-    width: 1000
-    height: 600
-    visible: false
+Window {
+     id: packetsView
+     width: 1000
+     height: 600
+     visible: false
 
-    signal startPressed()
-    signal stopPressed()
-    signal backPressed()
+     property int totalPackets: 0
 
-    function addPacketToView(packet){
-        packetModel.addPacket(packet)
-        protocolChart.appendSlice(packetModel.get(packetModel.count() - 1).protocol)
-        timeChart.addPoint()
-    }
+     signal startPressed()
+     signal stopPressed()
+     signal backPressed()
 
-    function clearModel(){
-        packetModel.clear()
-        listView.currentIndex = -1
-    }
+     function addPacketToView(packet){
+         packetModel.addPacket(packet)
+         totalPackets++
+         protocolChart.appendSlice(packetModel.get(packetModel.count() - 1).protocol)
+         timeChart.addPoint()
+     }
 
-    Rectangle{
-       id: topRect
-       width: parent.width; height: parent.height * 0.7
+     function start(){
+         if(!iconsRow.running){
+             totalPackets = 0
+             protocolChart.clear()
+             timeChart.clear()
+             timeChart.start()
+             packetsView.startPressed()
+         }
+     }
 
-       anchors{
-           left: parent.left
-           right: parent.right
-           top: parent.top
-           bottom: bottomRect.top
-       }
+     function stop(){
+         timeChart.stop()
+         if(iconsRow.running)
+            packetsView.stopPressed()
+     }
 
-       Rectangle{
-           id: leftRect
-           width: topRect.width * 0.7; height: topRect.height
+     function save(){
+         timeChart.stop()
+         if(iconsRow.running)
+             packetsView.stopPressed()
+         iconsRow.setStopped()
+         packetModel.save()
+     }
+
+     function open() {
+         if(iconsRow.running)
+             packetsView.stopPressed()
+         iconsRow.setStopped()
+         packetModel.load()
+         protocolChart.clear()
+         timeChart.stop()
+         timeChart.clear()
+         for(var i = 0; i < packetModel.count(); i++){
+             protocolChart.appendSlice(packetModel.get(i).protocol)
+         }
+         totalPackets = packetModel.count()
+     }
+
+     function clearModel(){
+         packetModel.clear()
+         listView.currentIndex = -1
+     }
+
+     Rectangle {
+        id: leftRect
+        width: parent.width * 0.6; height: parent.height
+
+        anchors{
+            top: parent.top
+            bottom: parent.bottom
+            left: parent.left
+        }
+
+        Rectangle{
+           id: topRect
+           width: parent.width; height: parent.height * 0.7
            anchors{
-               left: topRect.left
-               top: topRect.top
-               bottom: topRect.bottom
+               top: parent.top
+               left: parent.left
+               right: parent.right
            }
 
            // Ряд иконок
@@ -49,32 +89,25 @@ Window{
                id: iconsRow
 
                onStartPressed: {
-                   if(!running){
-                       protocolChart.clearPie()
-                       packetsView.startPressed()
-                   }
+                   start()
                }
                onStopPressed: {
-                   if(iconsRow.running)
-                      packetsView.stopPressed()
+                   stop()
                }
                onSavePressed: {
-                   if(iconsRow.running)
-                       packetsView.stopPressed()
-                   iconsRow.setStopped()
-                   packetModel.save()
+                   save()
                }
                onOpenPressed: {
-                   if(iconsRow.running)
-                       packetsView.stopPressed()
-                   iconsRow.setStopped()
-                   packetModel.load()
+                   open()
                }
                onBackPressed: {
+                   totalPackets = 0
                    if(running)
                        packetsView.stopPressed()
                    iconsRow.setStopped()
                    clearModel()
+                   protocolChart.clear()
+                   timeChart.stop()
                    packetsView.backPressed()
                }
            }
@@ -110,7 +143,12 @@ Window{
                    model: packetModel
 
                    // Анимации
-                   add: Transition{
+                   add: Transition {
+                       NumberAnimation { property: "opacity"; from: 0; to: 1.0; duration: 200 }
+                       NumberAnimation { property: "scale"; from: 0; to: 1.0; duration: 200 }
+                   }
+
+                   populate: Transition {
                        NumberAnimation { property: "opacity"; from: 0; to: 1.0; duration: 200 }
                        NumberAnimation { property: "scale"; from: 0; to: 1.0; duration: 200 }
                    }
@@ -136,72 +174,94 @@ Window{
            }
        }
 
-        // Диаграммы
-        Rectangle{
-            id: rightRect
-            width: topRect.width * 0.3; height: topRect.height
-            border { width: 1; color: "grey"}
+
+        Rectangle {
+            id: bottomRect
+            width: parent.width; height: parent.height * 0.3
 
             anchors{
-                left: leftRect.right
-                right: topRect.right
-                top: topRect.top
-                bottom: topRect.bottom
+                top: topRect.bottom
+                bottom: parent.bottom
+                left: parent.left
+                right: parent.right
             }
 
-            ProtocolChart{
-                id: protocolChart
-                anchors{
-                    left: parent.left
-                    right: parent.right
-                    top: parent.top
-                }
-            }
-
-            TimeChart{
-                id: timeChart
+            // Область с описанием выбранного пакета
+            Rectangle{
+                id: fullDataRect
+                width: parent.width; height: parent.height
                 anchors {
-                    left: parent.left
-                    right: parent.right
-                    top: protocolChart.bottom
-                    bottom: parent.bottom
+                    fill: parent
+                }
+                border{ width: 1; color: "grey" }
+
+                ScrollView{
+                    anchors.fill: parent
+                    clip: true
+
+                    Text{
+                        padding: { left: 5}
+                        text: listView.currentIndex > -1 ? packetModel.get(listView.currentIndex).fullData : ""
+                    }
                 }
             }
         }
     }
 
-    Rectangle{
-        id: bottomRect
-        width: parent.width; height: parent.height * 0.3
+    // Диаграммы
+    Rectangle {
+        id: rightRect
+        width: parent.width * 0.4; height: parent.height
+        border { width: 1; color: "grey"}
 
         anchors{
+            top: parent.top
             bottom: parent.bottom
-            left: parent.left
             right: parent.right
+            left: leftRect.right
         }
 
-        // Область с описанием выбранного пакета
-        Rectangle{
-            id: fullDataRect
-            width: parent.width; height: parent.height
+        Rectangle {
+            width: parent.width; height: 20
+            id: statsRect
+            border.width: 1; border.color: "grey"
             anchors {
-                fill: parent
+                top: parent.top
+                left: parent.left
+                right: parent.right
             }
-            border{ width: 1; color: "grey" }
+            Text {
+                anchors.centerIn: parent
 
-            ScrollView{
-                anchors.fill: parent
-                clip: true
+                text: "Всего пакетов захвачено: " + totalPackets
+            }
+        }
 
-                Text{
-                    padding: { left: 5}
-                    text: listView.currentIndex > -1 ? packetModel.get(listView.currentIndex).fullData : ""
-                }
+        ProtocolChart{
+            id: protocolChart
+            anchors{
+                left: parent.left
+                right: parent.right
+                top: statsRect.bottom
+            }
+        }
+
+        TimeChart{
+            id: timeChart
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: protocolChart.bottom
+                bottom: parent.bottom
             }
         }
     }
 
     PacketModel{
         id: packetModel
+    }
+
+    onClosing: {
+        Qt.quit()
     }
 }

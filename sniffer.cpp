@@ -24,7 +24,7 @@ QVariantMap Sniffer::getDevs(){
         while(alldevsp->next != NULL){
             QString desc = alldevsp->description;
             if(desc.isEmpty())
-                desc = "No description available";
+                desc = "Нет описания";
             d.insert(QString(alldevsp->name), desc);
             alldevsp = alldevsp->next;
         }

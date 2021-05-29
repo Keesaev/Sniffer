@@ -76,7 +76,11 @@ int PacketModel::count(){
 void PacketModel::save(){
     QScopedPointer<QWidget> widget(new QWidget());
     QString fileName = QFileDialog::getSaveFileName(widget.get(),
-        tr("Сохранить файл"), "", tr("Text files (*.txt)")) + ".txt";
+        tr("Сохранить файл"), "", tr("Text files (*.txt)"));
+    if(fileName.isEmpty())
+        return;
+    if(!fileName.endsWith(".txt"))
+        fileName += ".txt";
     QFile file(fileName);
     if(!file.open(QIODevice::WriteOnly))
     {

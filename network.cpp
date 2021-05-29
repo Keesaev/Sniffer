@@ -16,7 +16,7 @@ QString Network::getFullData(){
         "\n\tFlags: " + getFlags() +
         "\n\tFragment offset: " + QString::number(getOffset()) +
         "\n\tTime to live: " + QString::number(static_cast<int>(ipHeader.ip_ttl)) +
-        "\n\tProtocol: " + getProtocolName() +
+        "\n\tProtocol: " + QString::number(getProtocol()) + tr("(") + getProtocolName() + tr(")") +
         "\n\tHeader checksum: " + QString::number(ntohs(ipHeader.ip_sum)) +
         "\n\tSource: " + getAddress(ipHeader.ip_src) +
         "\n\tDestination: " + getAddress(ipHeader.ip_dst);
@@ -56,11 +56,15 @@ int Network::getProtocol(){
 
 QString Network::getProtocolName(){
     int p = static_cast<int>(ipHeader.ip_p);
-    QString s = QString::number(p);
+    QString s = "";
 
     map<int, QString>::iterator res = transportProts.find(p);
     if(res != transportProts.end())
-        s += " (" + res->second + ")";
+        s = res->second;
+    else if(p >= 144 && p <= 252)
+        s = "Unassigned";
+    else
+        s = "Unknown";
     return s;
 }
 
