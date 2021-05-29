@@ -1,13 +1,13 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
-        <file>PacketsView.qml</file>
-        <file>DevicesListDelegate.qml</file>
-        <file>PacketsViewCell.qml</file>
-        <file>PacketsViewHeader.qml</file>
-        <file>IconsRow.qml</file>
-        <file>ProtocolChart.qml</file>
-        <file>TimeChart.qml</file>
+        <file>qml/DevicesListDelegate.qml</file>
+        <file>qml/IconsRow.qml</file>
+        <file>qml/main.qml</file>
+        <file>qml/PacketsView.qml</file>
+        <file>qml/PacketsViewCell.qml</file>
+        <file>qml/PacketsViewHeader.qml</file>
+        <file>qml/ProtocolChart.qml</file>
+        <file>qml/TimeChart.qml</file>
     </qresource>
     <qresource prefix="/Images">
         <file>Icons/back.png</file>

@@ -12,16 +12,16 @@ Row{
 
     property bool running: false
 
-    property string startImg: "Images/Icons/play.png"
-    property string startHoveredImg: "Images/Icons/play_hovered.png"
-    property string stopImg: "Images/Icons/stop.png"
-    property string stopHoveredImg: "Images/Icons/stop_hovered.png"
-    property string backImg: "Images/Icons/back.png"
-    property string backHoveredImg: "Images/Icons/back_hovered.png"
-    property string saveImg: "Images/Icons/save.png"
-    property string saveHoveredImg: "Images/Icons/save_hovered.png"
-    property string openImg: "Images/Icons/open.png"
-    property string openHoveredImg: "Images/Icons/open_hovered.png"
+    property string startImg: "qrc:/Images/Icons/play.png"
+    property string startHoveredImg: "qrc:/Images/Icons/play_hovered.png"
+    property string stopImg: "qrc:/Images/Icons/stop.png"
+    property string stopHoveredImg: "qrc:/Images/Icons/stop_hovered.png"
+    property string backImg: "qrc:/Images/Icons/back.png"
+    property string backHoveredImg: "qrc:/Images/Icons/back_hovered.png"
+    property string saveImg: "qrc:/Images/Icons/save.png"
+    property string saveHoveredImg: "qrc:/Images/Icons/save_hovered.png"
+    property string openImg: "qrc:/Images/Icons/open.png"
+    property string openHoveredImg: "qrc:/Images/Icons/open_hovered.png"
 
     function setStopped(){
         running = false
