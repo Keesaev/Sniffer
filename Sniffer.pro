@@ -11,7 +11,6 @@ include(Protocols/protocols.pri)
 QMAKE_LFLAGS_WINDOWS += /MANIFESTUAC:"level='requireAdministrator'"
 
 SOURCES += \
-        factory.cpp \
         main.cpp \
         packetmodel.cpp \
         sniffer.cpp \
@@ -33,8 +32,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    factory.h \
-    packet.h \
+    factory.hpp \
+    packet.hpp \
     packetmodel.h \
     sniffer.h \
     snifferwrapper.h

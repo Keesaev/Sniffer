@@ -1,5 +1,4 @@
 SOURCES += \
-    Protocols/basetransport.cpp \
     Protocols/datalink.cpp \
     Protocols/network.cpp \
     Protocols/unknowntransport.cpp \
@@ -8,7 +7,7 @@ SOURCES += \
     Protocols/tcp.cpp
 
 HEADERS += \
-    Protocols/basetransport.h \
+    Protocols/basetransport.hpp \
     Protocols/datalink.h \
     Protocols/network.h \
     Protocols/unknowntransport.h \
