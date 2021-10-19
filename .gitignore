@@ -1,6 +1,9 @@
 # Prerequisites
 *.d
 
+# CMakeLists.user.txt *.pro.user
+*.user
+
 # Compiled Object files
 *.slo
 *.lo

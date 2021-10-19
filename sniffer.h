@@ -1,18 +1,19 @@
 #ifndef SNIFFER_H
 #define SNIFFER_H
 
-#include <Protocols/basetransport.h>
 #include <Protocols/datalink.h>
 #include <Protocols/network.h>
 #include <Protocols/unknowntransport.h>
-#include <factory.h>
-#include <packet.h>
 #include <pcap/pcap.h>
 
+#include <Protocols/basetransport.hpp>
 #include <QDateTime>
 #include <QDebug>
 #include <QObject>
+#include <factory.hpp>
 #include <sstream>
+
+#include "packet.hpp"
 
 using namespace std;
 

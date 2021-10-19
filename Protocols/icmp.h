@@ -1,9 +1,9 @@
 #ifndef ICMP_H
 #define ICMP_H
 
-#include <Protocols/basetransport.h>
 #include <pcap/pcap.h>
 
+#include <Protocols/basetransport.hpp>
 #include <QObject>
 #include <sstream>
 #include <string>

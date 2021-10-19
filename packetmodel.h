@@ -1,8 +1,6 @@
 #ifndef PACKETMODEL_H
 #define PACKETMODEL_H
 
-#include <packet.h>
-
 #include <QAbstractListModel>
 #include <QDataStream>
 #include <QDebug>
@@ -10,6 +8,8 @@
 #include <QFileDialog>
 #include <QObject>
 #include <QScopedPointer>
+
+#include "packet.hpp"
 
 class PacketModel : public QAbstractListModel {
   Q_OBJECT

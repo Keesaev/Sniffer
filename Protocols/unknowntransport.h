@@ -1,8 +1,7 @@
 #ifndef UNKNOWNTRANSPORT_H
 #define UNKNOWNTRANSPORT_H
 
-#include <Protocols/basetransport.h>
-
+#include <Protocols/basetransport.hpp>
 #include <QObject>
 #include <string>
 #include <vector>

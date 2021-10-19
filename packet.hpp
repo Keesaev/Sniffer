@@ -1,5 +1,5 @@
-#ifndef PACKETDATA_H
-#define PACKETDATA_H
+#ifndef PACKET_HPP
+#define PACKET_HPP
 
 #include <QMetaType>
 #include <QTime>
@@ -13,4 +13,4 @@ class Packet {
 };
 
 Q_DECLARE_METATYPE(Packet)
-#endif  // PACKETDATA_H
+#endif  // PACKET_HPP

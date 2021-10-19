@@ -1,9 +1,9 @@
 #ifndef TCP_H
 #define TCP_H
 
-#include <Protocols/basetransport.h>
 #include <pcap/pcap.h>
 
+#include <Protocols/basetransport.hpp>
 #include <QObject>
 #include <sstream>
 #include <string>
