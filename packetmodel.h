@@ -1,38 +1,42 @@
 #ifndef PACKETMODEL_H
 #define PACKETMODEL_H
 
-#include <QObject>
-#include <QAbstractListModel>
-#include <QDataStream>
-#include <QFile>
-#include <QDebug>
-#include <QFileDialog>
-#include <QScopedPointer>
 #include <packet.h>
 
-class PacketModel : public QAbstractListModel
-{
-    Q_OBJECT
-    QList<Packet> m_packets;
-    enum Roles {
-        NumberRole = Qt::UserRole,
-        SourceIpRole, DestIpRole, ProtocolRole,
-        LengthRole, FullDataRole, TimestampRole
-    };
+#include <QAbstractListModel>
+#include <QDataStream>
+#include <QDebug>
+#include <QFile>
+#include <QFileDialog>
+#include <QObject>
+#include <QScopedPointer>
 
-public:
-    PacketModel();
+class PacketModel : public QAbstractListModel {
+  Q_OBJECT
+  QList<Packet> m_packets;
+  enum Roles {
+    NumberRole = Qt::UserRole,
+    SourceIpRole,
+    DestIpRole,
+    ProtocolRole,
+    LengthRole,
+    FullDataRole,
+    TimestampRole
+  };
 
-    int rowCount(const QModelIndex &parent) const;
-    QVariant data(const QModelIndex &index, int role) const;
-    QHash<int, QByteArray> roleNames() const;
+ public:
+  PacketModel();
 
-    Q_INVOKABLE void clear();
-    Q_INVOKABLE void addPacket(const Packet p);
-    Q_INVOKABLE QVariantMap get(int row);
-    Q_INVOKABLE int count();
-    Q_INVOKABLE void save();
-    Q_INVOKABLE void load();
+  int rowCount(const QModelIndex &parent) const;
+  QVariant data(const QModelIndex &index, int role) const;
+  QHash<int, QByteArray> roleNames() const;
+
+  Q_INVOKABLE void clear();
+  Q_INVOKABLE void addPacket(const Packet p);
+  Q_INVOKABLE QVariantMap get(int row);
+  Q_INVOKABLE int count();
+  Q_INVOKABLE void save();
+  Q_INVOKABLE void load();
 };
 
-#endif // PACKETMODEL_H
+#endif  // PACKETMODEL_H

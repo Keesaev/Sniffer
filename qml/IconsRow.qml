@@ -1,4 +1,4 @@
-import QtQuick 2.15
+import QtQuick 2.10
 
 Row{
     leftPadding: 10; topPadding: 10; bottomPadding: 10; rightPadding: 10
