@@ -1,12 +1,12 @@
 #ifndef FACTORY_H
 #define FACTORY_H
 
-#include <Protocols/icmp.h>
-#include <Protocols/tcp.h>
-#include <Protocols/udp.h>
-#include <Protocols/unknowntransport.h>
+#include <protocols/icmp.h>
+#include <protocols/tcp.h>
+#include <protocols/udp.h>
+#include <protocols/unknowntransport.h>
 
-#include <Protocols/basetransport.hpp>
+#include <protocols/basetransport.hpp>
 #include <QObject>
 #include <iostream>
 

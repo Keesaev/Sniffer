@@ -1,12 +1,12 @@
 #ifndef SNIFFER_H
 #define SNIFFER_H
 
-#include <Protocols/datalink.h>
-#include <Protocols/network.h>
-#include <Protocols/unknowntransport.h>
+#include <protocols/datalink.h>
+#include <protocols/network.h>
+#include <protocols/unknowntransport.h>
 #include <pcap/pcap.h>
 
-#include <Protocols/basetransport.hpp>
+#include <protocols/basetransport.hpp>
 #include <QDateTime>
 #include <QDebug>
 #include <QObject>

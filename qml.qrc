@@ -8,17 +8,15 @@
         <file>qml/PacketsViewHeader.qml</file>
         <file>qml/ProtocolChart.qml</file>
         <file>qml/TimeChart.qml</file>
-    </qresource>
-    <qresource prefix="/Images">
-        <file>Icons/back.png</file>
-        <file>Icons/back_hovered.png</file>
-        <file>Icons/play.png</file>
-        <file>Icons/play_hovered.png</file>
-        <file>Icons/stop.png</file>
-        <file>Icons/stop_hovered.png</file>
-        <file>Icons/open.png</file>
-        <file>Icons/open_hovered.png</file>
-        <file>Icons/save.png</file>
-        <file>Icons/save_hovered.png</file>
+        <file>icons/back.png</file>
+        <file>icons/back_hovered.png</file>
+        <file>icons/open.png</file>
+        <file>icons/open_hovered.png</file>
+        <file>icons/play.png</file>
+        <file>icons/play_hovered.png</file>
+        <file>icons/save.png</file>
+        <file>icons/save_hovered.png</file>
+        <file>icons/stop.png</file>
+        <file>icons/stop_hovered.png</file>
     </qresource>
 </RCC>
