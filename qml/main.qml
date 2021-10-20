@@ -116,7 +116,7 @@ Window {
 
         onStartPressed: {
             packetsView.clearModel()
-            snifferWrapper.startCapture(-1)
+            snifferWrapper.startCapture(-1) // -1 for infinite
         }
         onStopPressed: {
             snifferWrapper.stopCapture()
@@ -125,6 +125,13 @@ Window {
             mainView.show()
             packetsView.hide()
             snifferWrapper.closeHandle()
+        }
+        onClosing:{
+            mainView.show()
+            packetsView.stop()
+            packetsView.clearModel()
+            packetsView.clearView()
+            snifferWrapper.stopCapture()
         }
     }
 

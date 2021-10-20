@@ -23,11 +23,8 @@ Window {
      }
 
      function start(){
+         clearView()
          if(!iconsRow.running){
-             totalPackets = 0
-             protocolChart.clear()
-             timeChart.clear()
-             timeChart.start()
              packetsView.startPressed()
          }
      }
@@ -58,6 +55,15 @@ Window {
              protocolChart.appendSlice(packetModel.get(i).protocol)
          }
          totalPackets = packetModel.count()
+     }
+
+     function clearView(){
+         timeChart.clear()
+         protocolChart.clear()
+         packetModel.clear()
+         iconsRow.setStopped()
+         totalPackets = 0
+         bottomText.text = ""
      }
 
      function clearModel(){
@@ -101,14 +107,7 @@ Window {
                    open()
                }
                onBackPressed: {
-                   totalPackets = 0
-                   if(running)
-                       packetsView.stopPressed()
-                   iconsRow.setStopped()
-                   clearModel()
-                   protocolChart.clear()
-                   timeChart.stop()
-                   packetsView.backPressed()
+                   close()
                }
            }
 
@@ -200,6 +199,7 @@ Window {
                     clip: true
 
                     Text{
+                        id: bottomText
                         padding: { left: 5}
                         text: listView.currentIndex > -1 ? packetModel.get(listView.currentIndex).fullData : ""
                     }
@@ -259,9 +259,5 @@ Window {
 
     PacketModel{
         id: packetModel
-    }
-
-    onClosing: {
-        Qt.quit()
     }
 }
