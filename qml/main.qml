@@ -2,6 +2,7 @@ import QtQuick 2.12
 import QtQuick.Window 2.12
 import SnifferWrapper 1.1
 import QtQuick.Controls 2.12
+import QtQuick.Dialogs 1.2
 
 Window {
 
@@ -22,11 +23,10 @@ Window {
         }
     }
 
-    Dialog{
+    MessageDialog {
         id: errorDialog
         title: "Could not initiallize pcap"
-        standardButtons: Dialog.Ok
-        modal: false
+        text: "Error occured while initializing pcap, please make sure that you are running as root"
     }
 
     Rectangle{
