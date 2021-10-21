@@ -2,6 +2,7 @@ import QtQuick 2.12
 import QtQuick.Window 2.12
 import SnifferWrapper 1.1
 import QtQuick.Controls 2.12
+import QtQuick.Dialogs 1.2
 
 Window {
 
@@ -20,6 +21,12 @@ Window {
                 listModel.append({name: i, description: devArray[i]})
             }
         }
+    }
+
+    MessageDialog {
+        id: errorDialog
+        title: "Could not initiallize pcap"
+        text: "Error occured while initializing pcap, please make sure that you are running as root"
     }
 
     Rectangle{
@@ -93,11 +100,16 @@ Window {
                 Button{
                     text: "Oк"
                     onClicked: {
-                        packetsView.show()
-                        mainView.hide()
-
                         snifferWrapper.setDev(listModel.get(listView.currentIndex).name)
-                        snifferWrapper.initPcap()
+                        if(!snifferWrapper.initPcap())
+                        {
+                             errorDialog.open()
+                        }
+                        else{
+                            packetsView.show()
+                            mainView.hide()
+
+                        }
                     }
                 }
                 Button{
