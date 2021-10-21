@@ -13,7 +13,7 @@ QVariantMap Sniffer::getDevs() {
   int retVal = pcap_findalldevs(&alldevsp, errbuf);
 
   if (retVal == PCAP_ERROR) {
-    qDebug() << errbuf << "\n";
+    qDebug() << __func__ << __LINE__ << errbuf << "\n";
     QVariantMap m;
     return m;
   } else {
@@ -37,13 +37,13 @@ void Sniffer::setDev(QString d) {
 // Инициализация pcap
 bool Sniffer::initPcap() {
   if (m_dev == NULL) {
-    qDebug() << "m_dev = NULL";
+    qDebug() << __func__ << __LINE__ << "m_dev = NULL";
     return false;
   }
   char errbuf[PCAP_ERRBUF_SIZE];
   m_handle = pcap_create(m_dev, errbuf);
   if (m_handle == NULL) {
-    qDebug() << errbuf;
+    qDebug() << __func__ << __LINE__ << errbuf;
     return false;
   } else {
     pcap_set_snaplen(m_handle, 65535);
@@ -57,7 +57,7 @@ bool Sniffer::initPcap() {
     if (retVal >= 0) {
       return true;
     } else {
-      qDebug() << retVal;
+      qDebug() << __func__ << __LINE__ << retVal;
       pcap_close(m_handle);
       return false;
     }

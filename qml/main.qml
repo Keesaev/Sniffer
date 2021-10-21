@@ -22,6 +22,13 @@ Window {
         }
     }
 
+    Dialog{
+        id: errorDialog
+        title: "Could not initiallize pcap"
+        standardButtons: Dialog.Ok
+        modal: false
+    }
+
     Rectangle{
         id: textRect
         height: 30
@@ -93,11 +100,16 @@ Window {
                 Button{
                     text: "Oк"
                     onClicked: {
-                        packetsView.show()
-                        mainView.hide()
-
                         snifferWrapper.setDev(listModel.get(listView.currentIndex).name)
-                        snifferWrapper.initPcap()
+                        if(!snifferWrapper.initPcap())
+                        {
+                             errorDialog.open()
+                        }
+                        else{
+                            packetsView.show()
+                            mainView.hide()
+
+                        }
                     }
                 }
                 Button{
