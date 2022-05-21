@@ -1,6 +1,11 @@
 # Prerequisites
 *.d
 
+# qtcreator
+Sniffer.pro.user
+*.pro.user
+*.pro.user*
+
 # CMakeLists.user.txt *.pro.user
 *.user
 
