@@ -1,20 +1,21 @@
 QT += qml core gui widgets quick
 
-CONFIG += c++11 charts
+CONFIG += c++17 charts
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-include(Protocols/protocols.pri)
+include(protocols/protocols.pri)
 
 QMAKE_LFLAGS_WINDOWS += /MANIFESTUAC:"level='requireAdministrator'"
 
 SOURCES += \
         main.cpp \
-        packetmodel.cpp \
+        packet_model.cpp \
         sniffer.cpp \
-        snifferwrapper.cpp
+        sniffer_wrapper.cpp \
+        transport_factory.cpp
 
 RESOURCES += qml.qrc
 
@@ -32,8 +33,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    factory.hpp \
+    transport_factory.h \
     packet.hpp \
-    packetmodel.h \
+    packet_model.h \
     sniffer.h \
-    snifferwrapper.h
+    sniffer_wrapper.h

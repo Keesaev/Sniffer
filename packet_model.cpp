@@ -1,29 +1,32 @@
-#include "packetmodel.h"
+#include "packet_model.h"
 
-PacketModel::PacketModel() {}
+#include <QDataStream>
+#include <QDebug>
+#include <QFile>
+#include <QFileDialog>
+#include <QScopedPointer>
 
-int PacketModel::rowCount(const QModelIndex &parent) const {
+int PacketModel::rowCount(const QModelIndex& parent) const {
+  Q_UNUSED(parent)
   return m_packets.length();
 }
 
-QVariant PacketModel::data(const QModelIndex &index, int role) const {
-  auto packetsIndex = index.row();
-  const Packet &p = m_packets.at(packetsIndex);
+QVariant PacketModel::data(const QModelIndex& index, int role) const {
   switch (role) {
     case NumberRole:
-      return p.number;
+      return m_packets.at(index.row()).number;
     case SourceIpRole:
-      return p.sourceIp;
+      return m_packets.at(index.row()).sourceIp;
     case DestIpRole:
-      return p.destIp;
+      return m_packets.at(index.row()).destIp;
     case ProtocolRole:
-      return p.protocol;
+      return m_packets.at(index.row()).protocol;
     case LengthRole:
-      return p.length;
+      return m_packets.at(index.row()).length;
     case FullDataRole:
-      return p.fullData;
+      return m_packets.at(index.row()).fullData;
     case TimestampRole:
-      return p.timestamp;
+      return m_packets.at(index.row()).timestamp;
     default:
       return data(index, role);
   }
@@ -62,23 +65,29 @@ QVariantMap PacketModel::get(int row) {
   return res;
 }
 
-int PacketModel::count() { return m_packets.size(); }
+int PacketModel::count() {
+  return m_packets.size();
+}
 
 void PacketModel::save() {
   QScopedPointer<QWidget> widget(new QWidget());
   QString fileName = QFileDialog::getSaveFileName(
       widget.get(), tr("Сохранить файл"), "", tr("Text files (*.txt)"));
-  if (fileName.isEmpty()) return;
-  if (!fileName.endsWith(".txt")) fileName += ".txt";
+  if (fileName.isEmpty())
+    return;
+  if (!fileName.endsWith(".txt"))
+    fileName += ".txt";
   QFile file(fileName);
   if (!file.open(QIODevice::WriteOnly)) {
     qDebug() << "Couldn't open file";
     return;
   }
   QDataStream stream(&file);
-  for (auto i : m_packets) {
-    stream << i.number << i.sourceIp << i.destIp << i.protocol << i.length
-           << i.fullData << i.timestamp;
+
+  foreach (const Packet& packet, m_packets) {
+    stream << packet.number << packet.sourceIp << packet.destIp
+           << packet.protocol << packet.length << packet.fullData
+           << packet.timestamp;
   }
   file.close();
 }

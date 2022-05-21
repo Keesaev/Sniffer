@@ -9,15 +9,17 @@
 
 class SnifferWrapper : public QObject {
   Q_OBJECT
-  Sniffer *sniffer;
-  QThread thread;
+  Sniffer m_sniffer;
+  QThread m_thread;
 
  public:
-  explicit SnifferWrapper(QObject *parent = nullptr);
+  explicit SnifferWrapper(QObject* parent = nullptr);
+  ~SnifferWrapper();
+
   Q_INVOKABLE void startCapture(int c);
   Q_INVOKABLE void stopCapture();
   Q_INVOKABLE QVariantMap getDevs();
-  Q_INVOKABLE void setDev(QString d);
+  Q_INVOKABLE void setDev(QString const& d);
   Q_INVOKABLE bool initPcap();
   Q_INVOKABLE void closeHandle();
  signals:

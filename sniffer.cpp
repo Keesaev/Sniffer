@@ -3,23 +3,32 @@
 
 #include "sniffer.h"
 
-Sniffer::Sniffer(QObject *parent) : QObject(parent) {}
+#include "protocols/base_transport.hpp"
+#include "protocols/data_link.h"
+#include "protocols/network.h"
+#include "protocols/unknown_transport.h"
+#include "transport_factory.h"
+
+#include <QDateTime>
+#include <QDebug>
+
+Sniffer::Sniffer(QObject* parent) : QObject(parent) {}
 
 // Возвращаем список доступных устройств
 QVariantMap Sniffer::getDevs() {
   QVariantMap d;
-  pcap_if_t *alldevsp;
+  pcap_if_t* alldevsp;
   char errbuf[PCAP_ERRBUF_SIZE];
   int retVal = pcap_findalldevs(&alldevsp, errbuf);
 
   if (retVal == PCAP_ERROR) {
     qDebug() << errbuf << "\n";
-    QVariantMap m;
-    return m;
+    return QVariantMap();
   } else {
     while (alldevsp->next != NULL) {
       QString desc = alldevsp->description;
-      if (desc.isEmpty()) desc = "Нет описания";
+      if (desc.isEmpty())
+        desc = "Нет описания";
       d.insert(QString(alldevsp->name), desc);
       alldevsp = alldevsp->next;
     }
@@ -30,7 +39,7 @@ QVariantMap Sniffer::getDevs() {
 // Устройство для прослушивания устанавливается извне
 void Sniffer::setDev(QString d) {
   QByteArray ba = d.toLocal8Bit();
-  char *devName = ba.data();
+  char* devName = ba.data();
   m_dev = devName;
 }
 
@@ -82,32 +91,29 @@ void Sniffer::startLoopingCapture() {
 
 // Захватываем один пакет и издаем сигнал
 void Sniffer::captureSinglePacket() {
-  pcap_pkthdr *header;
-  const u_char *bytes;
+  pcap_pkthdr* header;
+  const u_char* bytes;
   int retVal = pcap_next_ex(m_handle, &header, &bytes);
   if (retVal != 1) {
     return;  // PCAP не смог захватить пакет
   }
 
-  DataLink *datalink = new DataLink();
-  Network *network = new Network();
-  BaseTransport *transport;
+  auto datalink = std::make_unique<DataLink>();
+  auto network = std::make_unique<Network>();
 
   datalink->deserializeHeader(bytes);
   network->deserializeHeader(bytes);
+
   if (network->isHeaderEmpty()) {
-    delete datalink;
-    delete network;
     return;
   }
 
-  transport = Factory::makeTransport(network->getProtocol());
+  auto transport = TransportFactory::makeTransport(network->getProtocol());
   transport->deserializeHeader(
       bytes, datalink->getHeaderSize() + network->getHeaderSize());
 
   Packet packet;
   QDateTime time;
-  // time.setTime_t(header->ts.tv_sec);
   time.setSecsSinceEpoch(header->ts.tv_sec);
 
   packet.number = m_packetCount;
@@ -119,19 +125,24 @@ void Sniffer::captureSinglePacket() {
   packet.protocol = network->getProtocolName();
   packet.length = QString::number(header->len);
 
-  emit packetDeserialized(packet);
-
   m_packetCount++;
-  delete datalink;
-  delete network;
-  delete transport;
+  emit packetDeserialized(packet);
 }
 
-void Sniffer::stopCapture() { m_running = false; }
+void Sniffer::stopCapture() {
+  m_running = false;
+}
 
-void Sniffer::setMaxPacket(int c) { m_maxPacket = c; }
+void Sniffer::setMaxPacket(int c) {
+  m_maxPacket = c;
+}
 
 void Sniffer::closeHandle() {
+  m_running = false;
+  pcap_close(m_handle);
+}
+
+Sniffer::~Sniffer() {
   m_running = false;
   pcap_close(m_handle);
 }
