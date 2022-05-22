@@ -6,18 +6,18 @@ CONFIG += c++17 charts
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-include(protocols/protocols.pri)
+include(src/protocols/protocols.pri)
 
 QMAKE_LFLAGS_WINDOWS += /MANIFESTUAC:"level='requireAdministrator'"
 
 SOURCES += \
-        main.cpp \
-        packet_model.cpp \
-        sniffer.cpp \
-        sniffer_wrapper.cpp \
-        transport_factory.cpp
+        src/main.cpp \
+        src/packet_model.cpp \
+        src/sniffer.cpp \
+        src/sniffer_wrapper.cpp \
+        src/transport_factory.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += src/qml.qrc
 
 LIBS += -lpcap
 
@@ -33,8 +33,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    transport_factory.h \
-    packet.hpp \
-    packet_model.h \
-    sniffer.h \
-    sniffer_wrapper.h
+    src/transport_factory.h \
+    src/packet.hpp \
+    src/packet_model.h \
+    src/sniffer.h \
+    src/sniffer_wrapper.h

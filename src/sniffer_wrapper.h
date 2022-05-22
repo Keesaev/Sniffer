@@ -2,7 +2,7 @@
 #define SNIFFERWRAPPER_H
 
 #include <qqml.h>
-#include <sniffer.h>
+#include "sniffer.h"
 
 #include <QObject>
 #include <QThread>

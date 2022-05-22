@@ -11,17 +11,16 @@ Row{
     signal openPressed()
 
     property bool running: false
-
-    property string startImg: "qrc:/Images/Icons/play.png"
-    property string startHoveredImg: "qrc:/Images/Icons/play_hovered.png"
-    property string stopImg: "qrc:/Images/Icons/stop.png"
-    property string stopHoveredImg: "qrc:/Images/Icons/stop_hovered.png"
-    property string backImg: "qrc:/Images/Icons/back.png"
-    property string backHoveredImg: "qrc:/Images/Icons/back_hovered.png"
-    property string saveImg: "qrc:/Images/Icons/save.png"
-    property string saveHoveredImg: "qrc:/Images/Icons/save_hovered.png"
-    property string openImg: "qrc:/Images/Icons/open.png"
-    property string openHoveredImg: "qrc:/Images/Icons/open_hovered.png"
+    property string startImg: "qrc:/icons/play.png"
+    property string startHoveredImg: "qrc:/icons/play_hovered.png"
+    property string stopImg: "qrc:/icons/stop.png"
+    property string stopHoveredImg: "qrc:/icons/stop_hovered.png"
+    property string backImg: "qrc:/icons/back.png"
+    property string backHoveredImg: "qrc:/icons/back_hovered.png"
+    property string saveImg: "qrc:/icons/save.png"
+    property string saveHoveredImg: "qrc:/icons/save_hovered.png"
+    property string openImg: "qrc:/icons/open.png"
+    property string openHoveredImg: "qrc:/icons/open_hovered.png"
 
     function setStopped(){
         running = false
