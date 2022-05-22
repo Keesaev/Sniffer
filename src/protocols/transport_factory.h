@@ -1,7 +1,7 @@
 #ifndef TRANSPORTFACTORY_H
 #define TRANSPORTFACTORY_H
 
-#include "protocols/base_transport.hpp"
+#include "base_transport.hpp"
 
 #include <memory>
 

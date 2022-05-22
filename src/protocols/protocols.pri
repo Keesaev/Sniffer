@@ -4,7 +4,8 @@ SOURCES += \
     src/protocols/unknown_transport.cpp \
     src/protocols/icmp.cpp \
     src/protocols/udp.cpp \
-    src/protocols/tcp.cpp
+    src/protocols/tcp.cpp \
+    src/protocols/transport_factory.cpp 
 
 HEADERS += \
     src/protocols/base_transport.hpp \
@@ -13,4 +14,5 @@ HEADERS += \
     src/protocols/unknown_transport.h \
     src/protocols/icmp.h \
     src/protocols/udp.h \
-    src/    protocols/tcp.h
+    src/protocols/tcp.h \
+    src/protocols/transport_factory.h

@@ -6,8 +6,8 @@
 #include "protocols/base_transport.hpp"
 #include "protocols/data_link.h"
 #include "protocols/network.h"
+#include "protocols/transport_factory.h"
 #include "protocols/unknown_transport.h"
-#include "transport_factory.h"
 
 #include <QDateTime>
 #include <QDebug>

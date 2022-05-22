@@ -14,8 +14,7 @@ SOURCES += \
         src/main.cpp \
         src/packet_model.cpp \
         src/sniffer.cpp \
-        src/sniffer_wrapper.cpp \
-        src/transport_factory.cpp
+        src/sniffer_wrapper.cpp
 
 RESOURCES += src/qml.qrc
 
@@ -33,7 +32,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    src/transport_factory.h \
     src/packet.hpp \
     src/packet_model.h \
     src/sniffer.h \

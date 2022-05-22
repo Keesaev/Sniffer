@@ -1,9 +1,9 @@
 #include "transport_factory.h"
 
-#include "protocols/icmp.h"
-#include "protocols/tcp.h"
-#include "protocols/udp.h"
-#include "protocols/unknown_transport.h"
+#include "icmp.h"
+#include "tcp.h"
+#include "udp.h"
+#include "unknown_transport.h"
 
 std::unique_ptr<BaseTransport> TransportFactory::makeTransport(int protocol) {
   switch (protocol) {
