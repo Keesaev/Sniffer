@@ -2,12 +2,7 @@
 #define PACKETMODEL_H
 
 #include <QAbstractListModel>
-#include <QDataStream>
-#include <QDebug>
-#include <QFile>
-#include <QFileDialog>
 #include <QObject>
-#include <QScopedPointer>
 
 #include "packet.hpp"
 
@@ -25,11 +20,9 @@ class PacketModel : public QAbstractListModel {
   };
 
  public:
-  PacketModel();
-
-  int rowCount(const QModelIndex &parent) const;
-  QVariant data(const QModelIndex &index, int role) const;
-  QHash<int, QByteArray> roleNames() const;
+  virtual int rowCount(const QModelIndex& parent) const final;
+  virtual QVariant data(const QModelIndex& index, int role) const final;
+  virtual QHash<int, QByteArray> roleNames() const final;
 
   Q_INVOKABLE void clear();
   Q_INVOKABLE void addPacket(const Packet p);

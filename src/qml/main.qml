@@ -2,7 +2,6 @@ import QtQuick 2.12
 import QtQuick.Window 2.12
 import SnifferWrapper 1.1
 import QtQuick.Controls 2.12
-import QtQuick.Dialogs 1.2
 
 Window {
 
@@ -21,12 +20,6 @@ Window {
                 listModel.append({name: i, description: devArray[i]})
             }
         }
-    }
-
-    MessageDialog {
-        id: errorDialog
-        title: "Could not initiallize pcap"
-        text: "Error occured while initializing pcap, please make sure that you are running as root"
     }
 
     Rectangle{
@@ -100,16 +93,11 @@ Window {
                 Button{
                     text: "Oк"
                     onClicked: {
-                        snifferWrapper.setDev(listModel.get(listView.currentIndex).name)
-                        if(!snifferWrapper.initPcap())
-                        {
-                             errorDialog.open()
-                        }
-                        else{
-                            packetsView.show()
-                            mainView.hide()
+                        packetsView.show()
+                        mainView.hide()
 
-                        }
+                        snifferWrapper.setDev(listModel.get(listView.currentIndex).name)
+                        snifferWrapper.startCapture()
                     }
                 }
                 Button{
@@ -128,7 +116,7 @@ Window {
 
         onStartPressed: {
             packetsView.clearModel()
-            snifferWrapper.startCapture(-1) // -1 for infinite
+            snifferWrapper.startCapture()
         }
         onStopPressed: {
             snifferWrapper.stopCapture()
@@ -137,13 +125,6 @@ Window {
             mainView.show()
             packetsView.hide()
             snifferWrapper.closeHandle()
-        }
-        onClosing:{
-            mainView.show()
-            packetsView.stop()
-            packetsView.clearModel()
-            packetsView.clearView()
-            snifferWrapper.stopCapture()
         }
     }
 
@@ -155,7 +136,7 @@ Window {
         }
     }
 
-    onClosing: {
-        Qt.quit()
+    onClosing:{
+        Qt.callLater(Qt.quit)
     }
 }
