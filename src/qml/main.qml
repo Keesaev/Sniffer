@@ -97,7 +97,7 @@ Window {
                         mainView.hide()
 
                         snifferWrapper.setDev(listModel.get(listView.currentIndex).name)
-                        snifferWrapper.initPcap()
+                        snifferWrapper.startCapture()
                     }
                 }
                 Button{
@@ -116,7 +116,7 @@ Window {
 
         onStartPressed: {
             packetsView.clearModel()
-            snifferWrapper.startCapture(-1)
+            snifferWrapper.startCapture()
         }
         onStopPressed: {
             snifferWrapper.stopCapture()
@@ -136,7 +136,7 @@ Window {
         }
     }
 
-    onClosing: {
-        Qt.quit()
+    onClosing:{
+        Qt.callLater(Qt.quit)
     }
 }

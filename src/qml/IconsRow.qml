@@ -10,7 +10,7 @@ Row{
     signal savePressed()
     signal openPressed()
 
-    property bool running: false
+    property bool running: true
     property string startImg: "qrc:/icons/play.png"
     property string startHoveredImg: "qrc:/icons/play_hovered.png"
     property string stopImg: "qrc:/icons/stop.png"
@@ -24,12 +24,12 @@ Row{
 
     function setStopped(){
         running = false
-        startStopBtn.startStopSrc = startImg
+        startStopBtn.startStopSrc = stopImg
     }
 
     Image {
         id: startStopBtn
-        property string startStopSrc: startImg
+        property string startStopSrc: stopImg
         source: startStopSrc
         width: 30; height: 30
 

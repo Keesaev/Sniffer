@@ -261,7 +261,7 @@ Window {
         id: packetModel
     }
 
-    onClosing: {
-        Qt.quit()
+    onClosing:{
+        Qt.callLater(Qt.quit)
     }
 }

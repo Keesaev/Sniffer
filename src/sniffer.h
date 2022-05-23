@@ -4,6 +4,8 @@
 #include <pcap/pcap.h>
 
 #include <QObject>
+
+#include <memory>
 #include <sstream>
 
 #include "packet.hpp"
@@ -11,25 +13,24 @@
 class Sniffer : public QObject {
   Q_OBJECT
 
-  char* m_dev;
-  pcap_t* m_handle;
-  void captureSinglePacket();
-  int m_packetCount, m_maxPacket;
+  std::unique_ptr<pcap_t, void (*)(pcap_t*)> m_handle;
+
+  int m_packetCount{0};
   bool m_running = false;
+  char errbuf[PCAP_ERRBUF_SIZE];
+
+  void captureSinglePacket();
 
  public:
-  explicit Sniffer(QObject* parent = nullptr);
+  explicit Sniffer(QString const& device);
   ~Sniffer();
 
-  QVariantMap getDevs();
-  void setDev(QString d);
-  void setMaxPacket(int c);
-  bool initPcap();
-  void startLoopingCapture();
+  bool isValid() const;
+  void startCapture();
   void stopCapture();
-  void closeHandle();
  signals:
   void packetDeserialized(const Packet packet);
+  void finished();
 };
 
 #endif  // SNIFFER_H

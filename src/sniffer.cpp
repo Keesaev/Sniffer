@@ -12,88 +12,48 @@
 #include <QDateTime>
 #include <QDebug>
 
-Sniffer::Sniffer(QObject* parent) : QObject(parent) {}
-
-// Возвращаем список доступных устройств
-QVariantMap Sniffer::getDevs() {
-  QVariantMap d;
-  pcap_if_t* alldevsp;
-  char errbuf[PCAP_ERRBUF_SIZE];
-  int retVal = pcap_findalldevs(&alldevsp, errbuf);
-
-  if (retVal == PCAP_ERROR) {
-    qDebug() << errbuf << "\n";
-    return QVariantMap();
-  } else {
-    while (alldevsp->next != NULL) {
-      QString desc = alldevsp->description;
-      if (desc.isEmpty())
-        desc = "Нет описания";
-      d.insert(QString(alldevsp->name), desc);
-      alldevsp = alldevsp->next;
-    }
-    return d;
-  }
-}
-
-// Устройство для прослушивания устанавливается извне
-void Sniffer::setDev(QString d) {
-  QByteArray ba = d.toLocal8Bit();
-  char* devName = ba.data();
-  m_dev = devName;
-}
-
-// Инициализация pcap
-bool Sniffer::initPcap() {
-  if (m_dev == NULL) {
-    qDebug() << "m_dev = NULL";
-    return false;
-  }
-  char errbuf[PCAP_ERRBUF_SIZE];
-  m_handle = pcap_create(m_dev, errbuf);
-  if (m_handle == NULL) {
+Sniffer::Sniffer(QString const& device)
+    : QObject(nullptr),
+      m_handle{std::unique_ptr<pcap_t, void (*)(pcap_t*)>(
+          pcap_create(device.toLocal8Bit().data(), errbuf),
+          [](pcap_t* handle) { pcap_close(handle); })} {
+  if (m_handle.get() == nullptr) {
     qDebug() << errbuf;
-    return false;
   } else {
-    pcap_set_snaplen(m_handle, 65535);
-    pcap_set_promisc(m_handle, 1);
-    pcap_set_rfmon(m_handle, 0);
-    pcap_set_timeout(m_handle, 1000);
-    pcap_set_immediate_mode(m_handle, 1);
-    pcap_set_buffer_size(m_handle, PCAP_BUF_SIZE);
-    pcap_set_tstamp_type(m_handle, PCAP_TSTAMP_HOST);
-    int retVal = pcap_activate(m_handle);
-    if (retVal >= 0) {
-      return true;
-    } else {
-      qDebug() << retVal;
-      pcap_close(m_handle);
-      return false;
-    }
+    pcap_set_snaplen(m_handle.get(), 65535);
+    pcap_set_promisc(m_handle.get(), 1);
+    pcap_set_rfmon(m_handle.get(), 0);
+    pcap_set_timeout(m_handle.get(), 1000);
+    pcap_set_immediate_mode(m_handle.get(), 1);
+    pcap_set_buffer_size(m_handle.get(), PCAP_BUF_SIZE);
+    pcap_set_tstamp_type(m_handle.get(), PCAP_TSTAMP_HOST);
+    int retVal = pcap_activate(m_handle.get());
+
+    qDebug() << "pcap_activate " << retVal;
   }
+}
+
+bool Sniffer::isValid() const {
+  return m_handle.get() != nullptr;
 }
 
 // Вызываем captureSinglePacket в цикле, контроллируем его
 // переменной m_running
-void Sniffer::startLoopingCapture() {
+void Sniffer::startCapture() {
   m_running = true;
-  m_packetCount = 1;  // NOTE: пока убрал
-  if (m_maxPacket == -1) {
-    while (m_running) {
-      captureSinglePacket();
-    }
-  } else {
-    while (m_maxPacket-- && m_running) {
-      captureSinglePacket();
-    }
+  while (m_running) {
+    captureSinglePacket();
   }
+
+  qDebug() << "Finished";
+  emit finished();
 }
 
 // Захватываем один пакет и издаем сигнал
 void Sniffer::captureSinglePacket() {
   pcap_pkthdr* header;
   const u_char* bytes;
-  int retVal = pcap_next_ex(m_handle, &header, &bytes);
+  int retVal = pcap_next_ex(m_handle.get(), &header, &bytes);
   if (retVal != 1) {
     return;  // PCAP не смог захватить пакет
   }
@@ -133,16 +93,6 @@ void Sniffer::stopCapture() {
   m_running = false;
 }
 
-void Sniffer::setMaxPacket(int c) {
-  m_maxPacket = c;
-}
-
-void Sniffer::closeHandle() {
-  m_running = false;
-  pcap_close(m_handle);
-}
-
 Sniffer::~Sniffer() {
   m_running = false;
-  pcap_close(m_handle);
 }
