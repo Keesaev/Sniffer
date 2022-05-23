@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - run: mkdir build && cd build 
-    - run: apt update -y
-    - run: apt install -y g++ cmake make libqt5gui5 libqt5charts5-dev libqt5quick5 qtdeclarative5-dev libpcap-dev
+    - run: sudo apt update -y
+    - run: sudo apt install -y g++ cmake make libqt5gui5 libqt5charts5-dev libqt5quick5 qtdeclarative5-dev libpcap-dev
     - run: cmake .. && make -j5
     
