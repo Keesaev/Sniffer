@@ -25,6 +25,7 @@ jobs:
           libqt5gui5 
           libqt5quick5 
           libqt5quickcontrols2-5 
+          qml-module-qtquick-controls
           libqt5charts5-dev 
           qtdeclarative5-dev 
           libpcap-dev
