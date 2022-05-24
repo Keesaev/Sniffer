@@ -18,7 +18,6 @@ jobs:
       uses: myci-actions/add-deb-repo@10
       with:
         install: >
-          sudo apt install -y
           cmake 
           libqt5gui5 
           libqt5charts5-dev 
@@ -26,14 +25,6 @@ jobs:
           libpcap-dev
           
     - uses: actions/checkout@v3
-    - run: sudo apt update -y
-    - run: >
-        sudo apt install -y 
-          cmake 
-          libqt5gui5 
-          libqt5charts5-dev 
-          qtdeclarative5-dev 
-          libpcap-dev
     - run: >
         mkdir build
         cd build
