@@ -9,8 +9,21 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    # specific for this container
+    - run: >
+        sudo echo deb http://archive.ubuntu.com/ubuntu/ jammy main restricted >> /etc/apt/sources.list 
+        sudo echo deb http://archive.ubuntu.com/ubuntu/ jammy universe >> /etc/apt/sources.list
     - run: sudo apt update -y
-    - run: cat /etc/apt/sources.list
-    - run: sudo apt install -y g++ cmake make libqt5gui5 libqt5charts5-dev libqt5quick5-gles qtdeclarative5-dev libqt5qml5 libpcap-dev
-    - run: mkdir build && cd build && cmake .. && make -j5
+    - run: >
+        sudo apt install -y 
+          cmake 
+          libqt5gui5 
+          libqt5charts5-dev 
+          qtdeclarative5-dev 
+          libpcap-dev
+    - run: >
+        mkdir build
+        cd build
+        cmake .. 
+        make -j5
     
