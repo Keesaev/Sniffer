@@ -21,9 +21,7 @@ jobs:
     - name: Install other dependencies
       run: >
         sudo apt update -y &&
-        sudo apt install -y 
-          cmake 
-          libpcap-dev
+        sudo apt install -y cmake libpcap-dev
     - name: Cmake build 
       run: >
         mkdir build && 
