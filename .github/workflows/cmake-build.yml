@@ -18,6 +18,7 @@ jobs:
       uses: myci-actions/add-deb-repo@10
       with:
         install: >
+          sudo apt install -y
           cmake 
           libqt5gui5 
           libqt5charts5-dev 
