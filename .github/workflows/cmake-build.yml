@@ -8,30 +8,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:    
-    # install packages
-    # deb http://archive.ubuntu.com/ubuntu/ jammy main restricted 
-    # deb http://archive.ubuntu.com/ubuntu/ jammy universe
-    
-    # https://github.com/ryankurte/action-apt
-    
-    - name: Add repos and install dependencies
-      uses: myci-actions/add-deb-repo@10
-      with:
-        repo: >
-          deb http://archive.ubuntu.com/ubuntu/ jammy main restricted 
-          deb http://archive.ubuntu.com/ubuntu/ jammy universe
-        install: >
-          cmake 
-          libqt5gui5 
-          libqt5quick5 
-          libqt5quickcontrols2-5 
-          qml-module-qtquick-controls
-          libqt5charts5-dev 
-          qtdeclarative5-dev 
-          libpcap-dev
-          
     - uses: actions/checkout@v3
-    - run: >
+
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+      with:
+        version: '5.15.2'
+        host: 'linux'
+        dir: '${{ github.workspace }}/example/'
+        modules: 'qtcharts'
+        archives: 'qtbase qtdeclarative'
+    
+    - name: Install other dependencies
+      run: >
+        sudo apt update -y &&
+        sudo apt install -y 
+          cmake 
+          libpcap-dev
+    - name: Cmake build 
+      run: >
         mkdir build && 
         cd build && 
         cmake .. && 
