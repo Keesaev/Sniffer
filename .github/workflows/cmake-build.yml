@@ -19,6 +19,8 @@ jobs:
       with:
         install: >
           cmake 
+          qtbase5-dev 
+          qml-module-qtquick-controls
           libqt5gui5 
           libqt5charts5-dev 
           qtdeclarative5-dev 
