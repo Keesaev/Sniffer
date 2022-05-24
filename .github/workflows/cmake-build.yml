@@ -15,7 +15,6 @@ jobs:
       with:
         version: '5.15.2'
         host: 'linux'
-        dir: '${{ github.workspace }}/example/'
         modules: 'qtcharts'
         archives: 'qtbase qtdeclarative'
     
