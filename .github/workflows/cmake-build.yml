@@ -14,9 +14,12 @@ jobs:
     
     # https://github.com/ryankurte/action-apt
     
-    - name: Add debian repository
+    - name: Add repos and install dependencies
       uses: myci-actions/add-deb-repo@10
       with:
+        repo: >
+          deb http://archive.ubuntu.com/ubuntu/ jammy main restricted 
+          deb http://archive.ubuntu.com/ubuntu/ jammy universe
         install: >
           cmake 
           libqt5gui5 
