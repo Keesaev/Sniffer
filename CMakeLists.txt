@@ -40,8 +40,8 @@ include(cmake/FindPCAP.cmake)
 target_compile_definitions(${CMAKE_PROJECT_NAME}
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(${CMAKE_PROJECT_NAME}
-  Qt${QT_VERSION_MAJOR}::Quick
-  Qt${QT_VERSION_MAJOR}::Charts
+  Qt5::Quick
+  Qt5::Charts
 
   ${PCAP_LIBRARY}
 )
