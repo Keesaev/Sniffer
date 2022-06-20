@@ -9,12 +9,10 @@ jobs:
 
     steps:    
     - uses: actions/checkout@v3
-    - name: install dependencies
+    - name: install build dependencies
       run: >
-        sudo apt update -y && \
-        # build requires
-        sudo apt install -y cmake build-essential libpcap-dev qt5-default qtdeclarative5-dev libqt5charts5-dev && \
-        # run requires
+        sudo apt update -y && 
+        sudo apt install -y cmake build-essential libpcap-dev qt5-default qtdeclarative5-dev libqt5charts5-dev && 
         sudo apt install -y qml-module-qtcharts qml-module-qtquick-controls2
     - name: cmake build 
       run: >
