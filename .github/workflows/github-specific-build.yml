@@ -1,4 +1,6 @@
-name: build
+# this script relies on jurplel/install-qt-action action
+
+name: github-specific-build
 
 on: [push]
 
