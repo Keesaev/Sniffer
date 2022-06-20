@@ -12,7 +12,10 @@ jobs:
     - name: install dependencies
       run: >
         sudo apt update -y &&
-        sudo apt install -y cmake build-essential libpcap-dev qt5-default qtdeclarative5-dev libqt5charts5-dev
+        # build requires
+        sudo apt install -y cmake build-essential libpcap-dev qt5-default qtdeclarative5-dev libqt5charts5-dev &&
+        # run requires
+        sudo apt install -y qml-module-qtcharts qml-module-qtquick-controls2
     - name: cmake build 
       run: >
         mkdir build && 
