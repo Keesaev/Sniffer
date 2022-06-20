@@ -11,7 +11,7 @@ Run with ```sudo ./Sniffer``` as pcap requires root privileges to capture packag
 * Combining c++ and qml with signal/slot system
 * Building charts based on collected stats with QChartView
 ## Demo
-![](demo/youtube_example.gif)
+![](.github/demo/youtube_example.gif)
 ## Screenshots
 ![](https://sun9-19.userapi.com/impg/5T0v9XrzlCrLqlGbWhUnf6U3wLaQvrxoELCQKg/0sYAtFAmp0A.jpg?size=1920x1080&quality=96&sign=3193dc05bc2bc1310c25cc79bebbfbbd&type=album)
 ![](https://sun9-18.userapi.com/impg/evH5398mzMKHruxXPklbBKhaFJkAYz_tpykV4Q/_pZB8f_VRJw.jpg?size=1000x638&quality=96&sign=d75594d654361a65b66c6289fedac4e0&type=album)
