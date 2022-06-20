@@ -1,0 +1,42 @@
+name: build
+
+on: [push]
+
+jobs:
+  cmake-build:
+
+    runs-on: ubuntu-latest
+
+    steps:    
+    - uses: actions/checkout@v3
+    - name: install dependencies
+      run: >
+        sudo apt update -y &&
+        sudo apt install -y cmake build-essential libpcap-dev qt5-default qtdeclarative5-dev libqt5charts5-dev
+    - name: cmake build 
+      run: >
+        mkdir build && 
+        cd build && 
+        cmake .. && 
+        make -j5 && cd ..
+    - name: qmake build
+      run: >
+        mkdir qbuild &&
+        cd qbuild &&
+        qmake .. &&
+        make -j5
+
+# NOTE github's ubuntu-latest contains specific apt sources
+
+# /etc/apt/sources.list:
+
+# deb http://azure.archive.ubuntu.com/ubuntu/ focal main restricted
+# deb http://azure.archive.ubuntu.com/ubuntu/ focal-updates main restricted
+# deb http://azure.archive.ubuntu.com/ubuntu/ focal universe
+# deb http://azure.archive.ubuntu.com/ubuntu/ focal-updates universe
+# deb http://azure.archive.ubuntu.com/ubuntu/ focal multiverse
+# deb http://azure.archive.ubuntu.com/ubuntu/ focal-updates multiverse
+# deb http://azure.archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse
+# deb http://azure.archive.ubuntu.com/ubuntu/ focal-security main restricted
+# deb http://azure.archive.ubuntu.com/ubuntu/ focal-security universe
+# deb http://azure.archive.ubuntu.com/ubuntu/ focal-security multiverse
