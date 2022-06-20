@@ -1,6 +1,7 @@
 #include "sniffer_wrapper.h"
+#include <QDebug>
 
-SnifferWrapper::SnifferWrapper(QObject* parent) : QObject(parent) {}
+SnifferWrapper::SnifferWrapper(QObject *parent) : QObject(parent) {}
 
 bool SnifferWrapper::startCapture() {
   m_sniffer.reset(new Sniffer(m_device));
@@ -28,13 +29,11 @@ void SnifferWrapper::stopCapture() {
   m_sniffer.reset();
 }
 
-void SnifferWrapper::setDev(QString const& dev) {
-  m_device = dev;
-}
+void SnifferWrapper::setDev(QString const &dev) { m_device = dev; }
 
 QVariantMap SnifferWrapper::getDevs() {
   QVariantMap d;
-  pcap_if_t* alldevsp;
+  pcap_if_t *alldevsp;
   char errbuf[PCAP_ERRBUF_SIZE];
   int retVal = pcap_findalldevs(&alldevsp, errbuf);
 
